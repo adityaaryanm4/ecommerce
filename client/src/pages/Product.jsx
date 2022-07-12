@@ -73,10 +73,10 @@ const AmountContainer = styled.div`
    align-items: center;
 `
 const Add = styled.span`
-   
+   cursor: pointer
 `
 const Remove = styled.span`
-   
+   cursor: pointer
 `
 const Amount = styled.span`
 display: flex;
