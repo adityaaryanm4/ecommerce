@@ -9,12 +9,12 @@ import Register from './pages/Register'
 const App = () => {
   return (
     <div>
-        {/* <Home/> */}
+        <Home/>
         {/* <ProductList/> */}
         {/* <Product/> */}
         {/* <Register/> */}
         {/* <Login/> */}
-        <Cart/>
+        {/* <Cart/> */}
     </div>
   )
 }

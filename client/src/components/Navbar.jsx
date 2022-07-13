@@ -2,15 +2,18 @@ import React from 'react'
 import styled from 'styled-components'
 import { Badge } from 'antd';
 import { SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { mobile } from '../responsive';
 
 const Container = styled.div`
-  height:60px
+  height:60px;
+  ${mobile({ height:"50px" })}
   `
 const Wrapper = styled.div`
   padding: 20px 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  ${mobile({ padding:"20px 0" })}
   
   `
 const Left = styled.div`
@@ -21,7 +24,8 @@ const Left = styled.div`
   `
 const Language = styled.span`
   font-size: 18px;
-  cursor: pointer
+  cursor: pointer;
+  ${mobile({ display:"none" })}
   `
 const SearchContainer = styled.span`
   border: 0.5px solid lightgray;
