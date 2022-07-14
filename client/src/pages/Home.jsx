@@ -6,18 +6,23 @@ import Footer from '../components/Footer'
 import Newsletter from '../components/Newsletter'
 import Products from '../components/Products'
 import Slider from '../components/Slider'
+import styled from 'styled-components'
+
+const Container = styled.div`
+  overflow: hidden;
+`
 
 const Home = () => {
   return (
-    <div>
-        <Announcement/>
-        <Navbar/>
-        <Slider/>
-        <Categories/>
-        <Products/>
-        <Newsletter/>
-        <Footer/>
-    </div>
+        <Container>
+          <Announcement/>
+          <Navbar/>
+          <Slider/>
+          <Categories/>
+          <Products/>
+          <Newsletter/>
+          <Footer/>
+        </Container>
   )
 }
 

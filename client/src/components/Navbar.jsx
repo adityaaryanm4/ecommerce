@@ -6,14 +6,14 @@ import { mobile } from '../responsive';
 
 const Container = styled.div`
   height:60px;
-  ${mobile({ height:"50px" })}
+  ${mobile({ height: "50px" })}
   `
 const Wrapper = styled.div`
-  padding: 20px 25px;
+  padding: 15px 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  ${mobile({ padding:"20px 0" })}
+  ${mobile({ padding: "15px 0" })}
   
   `
 const Left = styled.div`
@@ -25,17 +25,23 @@ const Left = styled.div`
 const Language = styled.span`
   font-size: 18px;
   cursor: pointer;
-  ${mobile({ display:"none" })}
+  ${mobile({ display: "none" })}
   `
 const SearchContainer = styled.span`
   border: 0.5px solid lightgray;
   display: flex;
   align-items: center;
-  margin-left: 25px;
+  margin-left: 20px;
   padding: 5px
+  ${mobile({ padding: "2px" })}
+  
   `
 const Input = styled.input`
   border-style: none;
+  &:focus{
+    outline: none;
+  }
+  ${mobile({ width: "60px" })}
   `
 const Center = styled.div`
   flex: 1;
@@ -44,16 +50,19 @@ const Center = styled.div`
 const Logo = styled.h1`
   font-weight: bold;
   margin: 0;
+  ${mobile({ fontSize: "24px" })}
   `
 const Right = styled.div`
   flex: 1;
   display: flex;
   justify-content: flex-end;
+  ${mobile({ justifyContent: "center",flex:"2" })}
   `
 const MenuItem = styled.div`
 font-size: 20px;
 cursor: pointer;
 margin-left: 16px;
+${mobile({ fontSize: "16px",marginLeft:"5px" })}
   `
 const Navbar = () => {
   return (
@@ -63,7 +72,7 @@ const Navbar = () => {
           <Language>EN</Language>
 
           <SearchContainer>
-            <Input />
+            <Input placeholder="Search" />
             <SearchOutlined />
           </SearchContainer>
 
@@ -80,7 +89,7 @@ const Navbar = () => {
           </MenuItem>
           <MenuItem>
             <Badge count={5}>
-              <ShoppingCartOutlined style={{ fontSize: '28px' }} />
+              <ShoppingCartOutlined style={{ fontSize: '20px' }} />
             </Badge>
           </MenuItem>
         </Right>

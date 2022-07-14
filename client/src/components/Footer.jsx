@@ -1,10 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { InstagramOutlined, FacebookFilled, TwitterOutlined, PhoneFilled, MailOutlined, HomeFilled } from '@ant-design/icons';
+import { mobile } from '../responsive';
 
 const Container = styled.div`
     display: flex;
     padding: 20px;
+    ${mobile({ flexDirection: "column" })}
 `
 const Left = styled.div`
     flex: 1;
@@ -33,7 +35,8 @@ const SocialIcon = styled.div`
 
 `
 const Center = styled.div`
-    flex:1
+    flex:1;
+    ${mobile({ display: "none" })}
 `
 const Title = styled.h1`
 margin-bottom: 20px;
@@ -49,7 +52,8 @@ margin-bottom: 10px;
 width: 50%;
 `
 const Right = styled.div`
-    flex:1
+    flex:1;
+    ${mobile({ backgroundColor: "#fff8f8",marginTop:"30px" })}
 `
 const ContactItem = styled.div`
     margin-bottom: 10px;

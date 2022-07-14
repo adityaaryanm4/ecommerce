@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { mobile } from '../responsive';
 
 const Container = styled.div`
     height: 100vh;
@@ -19,6 +20,7 @@ const Wrapper = styled.div`
     background-color: white;
     padding: 20px;
     border-radius: 5px;
+    ${mobile({ width: "70%" })}
 `
 const Title = styled.h1`
     font-size: 24px;
@@ -34,6 +36,9 @@ const Input = styled.input`
     min-width: 40%;
     padding: 10px;
     margin: 10px 0 ;
+    &:focus{
+        outline:none
+    }
 `
 
 const Button = styled.button`

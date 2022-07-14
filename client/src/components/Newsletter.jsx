@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { SendOutlined } from '@ant-design/icons';
+import { mobile } from '../responsive';
 
 const Container = styled.div`
    height: 60vh;
@@ -12,20 +13,23 @@ const Container = styled.div`
 `
 const Title = styled.h1`
    font-size: 70px;
-   margin-bottom:20px
+   margin-bottom:20px;
+   font-weight: 600;
 `
 const Desc = styled.p`
    font-size: 24px;
    font-weight: 300;
    margin-bottom: 20px;
+   ${mobile({ textAlign: "center" })}
 `
 const InputBox = styled.div`
    background-color: white;
-   width: 50%;
+   width: 40%;
    height: 40px;
    border: 1px solid lightgray;
    display: flex;
    justify-content: space-between;
+   ${mobile({ width: "80%"})}
 `
 const Input = styled.input`
     border:none;

@@ -2,10 +2,11 @@ import { Carousel } from 'react-bootstrap'
 import React from 'react'
 import styled from 'styled-components'
 import { sliderItems } from '../data'
+import { mobile } from '../responsive';
 
 const Container = styled.div`
-padding-top: 10px;
-
+margin-top: 20px;
+${mobile({ display:"none" })}
 `
 const Wrapper = styled.div`
 width: 100%;
