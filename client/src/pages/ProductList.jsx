@@ -6,6 +6,9 @@ import Products from '../components/Products'
 import Newsletter from '../components/Newsletter'
 import Footer from '../components/Footer'
 import { mobile } from '../responsive';
+import { useState } from 'react'
+import { useParams } from 'react-router-dom'
+
 
 const Title = styled.h1`
     margin: 20px;
@@ -19,18 +22,31 @@ const Filter = styled.div`
     margin: 20px;
     font-size: 20px;
     font-weight: 600;
-    ${mobile({ display: "flex",flexDirection:"column" })}
+    ${mobile({ display: "flex", flexDirection: "column" })}
 `
 const Select = styled.select`
    padding: 10px;
    margin-left: 20px;
-   ${mobile({ margin:"10px 0" })}
+   ${mobile({ margin: "10px 0" })}
    
 `
 const Option = styled.option`
    
 `
 const ProductList = () => {
+
+    const { category } = useParams()
+    const [filters, setFilters] = useState({})
+    const [sort, setSort] = useState("newest")
+
+    const handleFiltersChange = (event) => {
+        const { name, value } = event.target
+        setFilters({ ...filters, [name]: value })
+    }
+    const handleSortChange = (event) => {
+        const { value } = event.target
+        setSort(value)
+    }
     return (
         <div>
             <Announcement />
@@ -39,17 +55,17 @@ const ProductList = () => {
             <FilterContainer>
                 <Filter>
                     Filter Products
-                    <Select>
-                        <Option disabled selected>Color</Option>
-                        <Option>White</Option>
-                        <Option>Black</Option>
-                        <Option>Red</Option>
-                        <Option>Blue</Option>
-                        <Option>Yellow</Option>
-                        <Option>Green</Option>
+                    <Select name="color" onChange={handleFiltersChange}>
+                        <Option defaultValue="disabled">Color</Option>
+                        <Option>white</Option>
+                        <Option>black</Option>
+                        <Option>red</Option>
+                        <Option>blue</Option>
+                        <Option>yellow</Option>
+                        <Option>green</Option>
                     </Select>
-                    <Select>
-                        <Option disabled selected>Size</Option>
+                    <Select name="size" onChange={handleFiltersChange}>
+                        <Option defaultValue="disabled" >Size</Option>
                         <Option>XS</Option>
                         <Option>S</Option>
                         <Option>M</Option>
@@ -59,14 +75,14 @@ const ProductList = () => {
                 </Filter>
                 <Filter>
                     Sort Products
-                    <Select>
-                        <Option disabled selected>Newest</Option>
-                        <Option>Price(asc)</Option>
-                        <Option>Price(desc)</Option>
+                    <Select onChange={handleSortChange}>
+                        <Option defaultValue="disabled">Newest</Option>
+                        <Option value="asc">Price(asc)</Option>
+                        <Option value="desc">Price(desc)</Option>
                     </Select>
                 </Filter>
             </FilterContainer>
-            <Products />
+            <Products category={category} filters={filters} sort={sort} />
             <Newsletter />
             <Footer />
         </div>

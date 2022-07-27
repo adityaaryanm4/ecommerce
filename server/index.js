@@ -1,4 +1,5 @@
-const express = require("express")
+const express = require("express");
+const data = require("../testData");
 const app = express()
 
 const connectDB = require("./db")
@@ -13,9 +14,8 @@ app.use("/api/user",usersRoutes)
 const authRoutes = require("./routes/authRoutes")
 app.use("/api/auth",authRoutes)
 
-
-
-
+const productsRoutes = require("./routes/productsRoutes")
+app.use("/api/product",productsRoutes)
 
 
 
