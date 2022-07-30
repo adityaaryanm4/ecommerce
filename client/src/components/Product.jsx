@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { SearchOutlined, ShoppingCartOutlined, HeartOutlined } from '@ant-design/icons';
+import {Link} from "react-router-dom"
 
 const Container = styled.div`
     background-color: #f5fbfd;
@@ -58,13 +59,15 @@ const Icon = styled.div`
     transform: scale(1.1);
     }
 `
-const Product = ({ img }) => {
+const Product = ({ product }) => {
     return (
         <Container>
             <Circle />
-            <Image src={img} alt="popularProduct" />
+            <Image src={product.img} alt="popularProduct" />
             <Info>
-                <Icon>  <SearchOutlined style={{ fontSize: '22px' }}/>  </Icon>
+                <Link to={`/product/${product._id}`}>
+                    <Icon>  <SearchOutlined style={{ fontSize: '22px' }}/>  </Icon>
+                </Link>
                 <Icon>  <ShoppingCartOutlined style={{ fontSize: '22px' }}/>  </Icon>
                 <Icon>  <HeartOutlined style={{ fontSize: '22px' }}/> </Icon>
             </Info>

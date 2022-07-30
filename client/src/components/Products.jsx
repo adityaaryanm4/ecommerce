@@ -49,12 +49,12 @@ const Products = ({ category, filters, sort }) => {
         <Container>
             {category ? filteredProducts.map(filteredProduct => {
                 return (
-                    <Product key={filteredProduct._id} img={filteredProduct.img} />
+                    <Product key={filteredProduct._id} product={filteredProduct} />
 
                 )
             }) : products.slice(0, 8).map(product => {
                 return (
-                    <Product key={product._id} img={product.img} />
+                    <Product key={product._id} product={product} />
 
                 )
             })}

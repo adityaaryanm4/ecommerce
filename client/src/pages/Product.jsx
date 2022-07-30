@@ -1,4 +1,7 @@
+import axios from 'axios'
 import React from 'react'
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import Announcement from '../components/Announcement'
 import Footer from '../components/Footer'
@@ -6,10 +9,11 @@ import Navbar from '../components/Navbar'
 import Newsletter from '../components/Newsletter'
 import { mobile } from '../responsive'
 
+
 const Wrapper = styled.div`
     display: flex;
     padding: 50px;
-    ${mobile({flexDirection:"column",padding:"20px"})}
+    ${mobile({ flexDirection: "column", padding: "20px" })}
 `
 const ImgContainer = styled.div`
     flex:1;
@@ -18,12 +22,12 @@ const Image = styled.img`
     width: 100%;
     height: 90vh;
     object-fit: cover;
-    ${mobile({height: "50vh"})}
+    ${mobile({ height: "50vh" })}
 `
 const InfoContainer = styled.div`
     flex:1;
     padding: 0px 50px;
-    ${mobile({padding: "10px"})}
+    ${mobile({ padding: "10px" })}
 `
 const Title = styled.h1`
 font-weight: 200;
@@ -40,7 +44,7 @@ const FilterContainer = styled.div`
     width: 70%;
     display: flex;
     justify-content: space-between;
-    ${mobile({width: "100%"})}
+    ${mobile({ width: "100%" })}
 `
 const Filter = styled.div`
     display: flex;
@@ -70,7 +74,7 @@ const AddContainer = styled.div`
    display: flex;
    justify-content: space-between;
    align-items: center;
-   ${mobile({width: "100%"})}
+   ${mobile({ width: "100%" })}
 `
 const AmountContainer = styled.div`
    font-weight: 600;
@@ -106,52 +110,79 @@ const Button = styled.button`
 `
 
 const Product = () => {
+    const { _id } = useParams()
+    const [product, setProduct] = useState({})
+    const [loader, setLoader] = useState(true)
+
+    const [amount, setAmount] = useState(1)
+    const [color, setColor] = useState("")
+    const [size, setSize] = useState("")
+
+    const handleAmountChange = (type) => {
+        if (type === "inc") {
+            setAmount(amount + 1)
+        } else {
+            amount > 1 && setAmount(amount - 1)
+        }
+    }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = (await axios.get(`/api/product/find/${_id}`)).data
+                setProduct(response)
+                setLoader(false)
+
+            }
+            catch (error) {
+                console.log(error)
+                setLoader(false)
+            }
+        }
+        fetchData()
+    }, [_id])
+
+
+
     return (
         <div>
             <Announcement />
             <Navbar />
-            <Wrapper>
+            {loader ? "loading..." : <Wrapper>
                 <ImgContainer>
-                    <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" alt="product-img">
+                    <Image src={product.img} alt="product-img">
                     </Image>
                 </ImgContainer>
                 <InfoContainer>
-                    <Title>Denim Jumpsuit</Title>
-                    <Desc>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                        venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
-                        iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
-                        tristique tortor pretium ut. Curabitur elit justo, consequat id
-                        condimentum ac, volutpat ornare.</Desc>
-                    <Price>$ 20</Price>
+                    <Title>{product.title}</Title>
+                    <Desc>{product.desc}</Desc>
+                    <Price>{product.price}$</Price>
                     <FilterContainer>
                         <Filter>
                             Color:
-                            <FilterColor color="black" />
-                            <FilterColor color="darkblue" />
-                            <FilterColor color="gray" />
+                            {product.color.map((item) => <FilterColor color={item} key={item} onClick={() => setColor(item)} />)}
                         </Filter>
-                        <Filter>
+                        <Filter onChange={(event) => {
+                            setSize(event.target.value)
+                        }}>
                             Size:
-                            <Select>
-                                <Option disabled selected>Size</Option>
-                                <Option>XS</Option>
-                                <Option>S</Option>
-                                <Option>M</Option>
-                                <Option>L</Option>
-                                <Option>XL</Option>
+                            <Select >
+                                {product.size.map((item) => <Option value={item} key={item} >{item}</Option>)}
+                                {console.log(size, color)}
                             </Select>
                         </Filter>
                     </FilterContainer>
                     <AddContainer>
                         <AmountContainer>
-                            <Remove>-</Remove>
-                            <Amount>1</Amount>
-                            <Add>+</Add>
+                            <Remove onClick={() => handleAmountChange("dec")}>-</Remove>
+                            <Amount>{amount}</Amount>
+                            <Add onClick={() => handleAmountChange("inc")}>+</Add>
                         </AmountContainer>
                         <Button>ADD TO CART</Button>
                     </AddContainer>
                 </InfoContainer>
-            </Wrapper>
+            </Wrapper>}
+
             <Newsletter />
             <Footer />
         </div>
