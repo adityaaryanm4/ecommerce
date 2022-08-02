@@ -17,7 +17,8 @@ app.use("/api/auth",authRoutes)
 const productsRoutes = require("./routes/productsRoutes")
 app.use("/api/product",productsRoutes)
 
-
+const stripeRoutes = require("./routes/stripeRoutes")
+app.use("/api/stripe",stripeRoutes)
 
 
 

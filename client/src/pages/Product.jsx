@@ -8,6 +8,8 @@ import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import Newsletter from '../components/Newsletter'
 import { mobile } from '../responsive'
+import { addProduct } from '../store/cartSlice'
+import { useDispatch } from "react-redux";
 
 
 const Wrapper = styled.div`
@@ -110,6 +112,7 @@ const Button = styled.button`
 `
 
 const Product = () => {
+    const dispatch = useDispatch()
     const { _id } = useParams()
     const [product, setProduct] = useState({})
     const [loader, setLoader] = useState(true)
@@ -124,6 +127,10 @@ const Product = () => {
         } else {
             amount > 1 && setAmount(amount - 1)
         }
+    }
+
+    const handleAdd  = ()=>{
+        dispatch(addProduct({...product,color,size,amount}))
     }
 
     useEffect(() => {
@@ -178,7 +185,7 @@ const Product = () => {
                             <Amount>{amount}</Amount>
                             <Add onClick={() => handleAmountChange("inc")}>+</Add>
                         </AmountContainer>
-                        <Button>ADD TO CART</Button>
+                        <Button onClick={handleAdd}>ADD TO CART</Button>
                     </AddContainer>
                 </InfoContainer>
             </Wrapper>}

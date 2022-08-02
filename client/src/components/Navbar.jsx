@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { Badge } from 'antd';
 import { SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { mobile } from '../responsive';
+import { useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   height:60px;
@@ -56,15 +58,16 @@ const Right = styled.div`
   flex: 1;
   display: flex;
   justify-content: flex-end;
-  ${mobile({ justifyContent: "center",flex:"2" })}
+  ${mobile({ justifyContent: "center", flex: "2" })}
   `
 const MenuItem = styled.div`
 font-size: 20px;
 cursor: pointer;
 margin-left: 16px;
-${mobile({ fontSize: "16px",marginLeft:"5px" })}
+${mobile({ fontSize: "16px", marginLeft: "5px" })}
   `
 const Navbar = () => {
+  const cartQuantity = useSelector(state => state.cart.cartQuantity)
   return (
     <Container>
       <Wrapper>
@@ -87,11 +90,14 @@ const Navbar = () => {
           <MenuItem>
             Log In
           </MenuItem>
-          <MenuItem>
-            <Badge count={5}>
-              <ShoppingCartOutlined style={{ fontSize: '20px' }} />
-            </Badge>
-          </MenuItem>
+          <Link to="/cart">
+            <MenuItem>
+              { /* <Badge  showZero color="#108ee9">
+              <ShoppingCartOutlined />
+            </Badge> */}
+              cart: {cartQuantity}
+            </MenuItem>
+          </Link>
         </Right>
       </Wrapper>
     </Container>
