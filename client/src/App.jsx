@@ -8,6 +8,8 @@ import Register from './pages/Register'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { Provider } from "react-redux";
 import store from "./store/store";
+import Success from './components/Success'
+import Cancel from './components/Cancel'
 
 
 const App = () => {
@@ -21,6 +23,8 @@ const App = () => {
           <Route path="/cart" element={<Cart />}></Route>
           <Route path="/products/:category" element={<ProductList />}></Route>
           <Route path="/product/:_id" element={<Product />}></Route>
+          <Route path="/success" element={<Success />}></Route>
+          <Route path="/cancel" element={<Cancel />}></Route>
         </Routes>
       </BrowserRouter>
     </Provider>

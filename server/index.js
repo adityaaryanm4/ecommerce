@@ -1,5 +1,5 @@
+require("dotenv").config()
 const express = require("express");
-const data = require("../testData");
 const app = express()
 
 const connectDB = require("./db")
@@ -7,6 +7,9 @@ connectDB()
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
+
+const cors = require("cors")
+app.use(cors());
 
 const usersRoutes = require("./routes/usersRoutes")
 app.use("/api/user",usersRoutes)
@@ -18,9 +21,7 @@ const productsRoutes = require("./routes/productsRoutes")
 app.use("/api/product",productsRoutes)
 
 const stripeRoutes = require("./routes/stripeRoutes")
-app.use("/api/stripe",stripeRoutes)
-
-
+app.use("/api/checkout",stripeRoutes)
 
 
 

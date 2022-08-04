@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
 import Announcement from '../components/Announcement'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import styled from 'styled-components'
 import { mobile } from '../responsive'
 import { useSelector } from "react-redux";
+import StripeCheckout from "react-stripe-checkout";
 
 const Container = styled.div`
     
@@ -159,6 +161,20 @@ border-radius: 5px
 const Cart = () => {
     const cart = useSelector(state => state.cart)
     const { products, cartQuantity, cartTotal } = cart
+
+    const handleCheckout = ()=>{
+        try {
+            const createSession = async () => {
+                const response = (await axios.post("/api/checkout/create-checkout-session",{ products, cartQuantity, cartTotal })).data
+                localStorage.setItem("paymentIntent",JSON.stringify(response.pi))
+                window.location.href=response.url
+            }
+            createSession()
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <Container>
             <Announcement />
@@ -175,7 +191,7 @@ const Cart = () => {
                 </Top>
                 <Bottom>
                     <Info>
-                        {products && products.map(product => <Product>
+                        {products && products.map(product => <Product key={product._id}>
                             <ProductDetails>
                                 <Image src={product.img} alt="product-image"></Image>
                                 <Details>
@@ -219,12 +235,14 @@ const Cart = () => {
                             <SummaryText>Total</SummaryText>
                             <SummaryPrice>$ {cartTotal}</SummaryPrice>
                         </SummaryItem>
-                        <Button>CHECKOUT NOW</Button>
+                        
+                            <Button onClick={handleCheckout}>CHECKOUT NOW</Button>
+                        
                     </Summary>
                 </Bottom>
             </Wrapper>
             <Footer />
-        </Container>
+        </Container >
     )
 }
 
