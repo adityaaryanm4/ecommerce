@@ -2,9 +2,10 @@ const express = require("express")
 const router = express.Router()
 
 const Product = require("../models/product")
+const { verifyTokenAndAdmin } = require("./verifyToken")
 
 // CREATE
-router.post("/", async (req, res) => {
+router.post("/", verifyTokenAndAdmin, async (req, res) => {
     try {
         const newRecord = new Product(req.body)
         const savedRecord = await newRecord.save()
@@ -16,7 +17,7 @@ router.post("/", async (req, res) => {
 })
 
 // UPDATE
-router.put("/:_id", async (req, res) => {
+router.put("/:_id", verifyTokenAndAdmin, async (req, res) => {
     try {
         const updatedProduct = await Product.findByIdAndUpdate(req.params._id,
             { $set: req.body }, { new: true }
@@ -29,7 +30,7 @@ router.put("/:_id", async (req, res) => {
 })
 
 // DELETE
-router.delete("/:_id", async (req, res) => {
+router.delete("/:_id", verifyTokenAndAdmin, async (req, res) => {
     try {
         await Product.findByIdAndDelete(req.params._id)
         res.status(200).json("Product has been deleted")

@@ -23,6 +23,12 @@ app.use("/api/product",productsRoutes)
 const stripeRoutes = require("./routes/stripeRoutes")
 app.use("/api/checkout",stripeRoutes)
 
+const cartRoutes = require("./routes/cartRoutes")
+app.use("/api/cart",cartRoutes)
+
+const ordersRoutes = require("./routes/ordersRoutes")
+app.use("/api/order",ordersRoutes)
+
 
 
 const PORT = 5000

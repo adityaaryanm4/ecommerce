@@ -6,15 +6,12 @@ import Product from './pages/Product'
 import ProductList from './pages/ProductList'
 import Register from './pages/Register'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { Provider } from "react-redux";
-import store from "./store/store";
 import Success from './components/Success'
 import Cancel from './components/Cancel'
 
 
 const App = () => {
   return (
-    <Provider store={store}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />}></Route>
@@ -27,7 +24,6 @@ const App = () => {
           <Route path="/cancel" element={<Cancel />}></Route>
         </Routes>
       </BrowserRouter>
-    </Provider>
   )
 }
 

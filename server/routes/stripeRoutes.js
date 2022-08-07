@@ -5,9 +5,11 @@ const stripe = require("stripe")(process.env.STRIPE_KEY)
 
 const DOMAIN = "http://localhost:3000"
 
-router.post('/create-checkout-session', async (req, res) => {
+const { verifyToken } = require("./verifyToken")
 
-  const { products, cartQuantity, cartTotal } = req.body
+router.post('/create-checkout-session',verifyToken, async (req, res) => {
+
+  const { products } = req.body
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
@@ -18,9 +20,9 @@ router.post('/create-checkout-session', async (req, res) => {
           product_data: {
             name: product.title,
           },
-          unit_amount: cartTotal,
+          unit_amount: product.price * 100,
         },
-        quantity: cartQuantity,
+        quantity: product.amount,
       }
     }),
     mode: 'payment',
@@ -28,15 +30,6 @@ router.post('/create-checkout-session', async (req, res) => {
     cancel_url: `${DOMAIN}/cancel`,
   });
   res.json({pi:session.payment_intent,url:session.url});
-});
-
-router.get('/:paymentIntent', async (req, res) => {
-  console.log(req.params.paymentIntent)
-  const paymentIntent = await stripe.paymentIntents.retrieve(
-    req.params.paymentIntent
-  );
-  console.log(paymentIntent)
-  res.json(paymentIntent);
 });
 
 

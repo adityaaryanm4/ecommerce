@@ -11,9 +11,13 @@ const cartSlice = createSlice({
         addProduct(state, action) {
             state.cartQuantity += 1
             state.products.push(action.payload)
-            state.cartTotal = state.cartTotal + (action.payload.price * action.payload.amount)
+            state.cartTotal = state.cartTotal + (action.payload.price * 100 * action.payload.amount)
         },
-        removeProduct(state, action) { }
+        removeProduct(state, action) {
+            state.cartQuantity > 0 && (state.cartQuantity = state.cartQuantity - 1)
+            state.products = state.products.filter(product=>product._id !== action.payload._id)
+            state.cartTotal > 0 && (state.cartTotal = state.cartTotal - (action.payload.price * 100 * action.payload.amount))
+         }
     }
 })
 

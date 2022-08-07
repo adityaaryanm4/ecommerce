@@ -2,13 +2,13 @@ const express = require("express")
 const router = express.Router()
 
 const User = require("../models/user")
-// const { verifyToken } = require("./verifyToken")
+const { verifyTokenAndAuthorisation, verifyTokenAndAdmin } = require("./verifyToken")
 
 const bcrypt = require("bcrypt")
 const saltRound = 10
 
 //UPDATE
-router.put("/:_id", async (req, res) => {
+router.put("/:_id", verifyTokenAndAuthorisation, async (req, res) => {
     if (req.body.password) {
         req.body.password = await bcrypt.hash(req.body.password, saltRound)
     }
@@ -23,7 +23,7 @@ router.put("/:_id", async (req, res) => {
 })
 
 //DELETE
-router.delete("/:_id", async (req, res) => {
+router.delete("/:_id", verifyTokenAndAuthorisation, async (req, res) => {
 
     try {
         await User.findByIdAndDelete(req.params._id)
@@ -34,7 +34,7 @@ router.delete("/:_id", async (req, res) => {
 })
 
 // GET USER
-router.get("/find/:_id", async (req, res) => {
+router.get("/find/:_id", verifyTokenAndAdmin, async (req, res) => {
     try {
         const user = await User.findById(req.params._id)
         const { password, ...others } = user._doc
@@ -46,7 +46,7 @@ router.get("/find/:_id", async (req, res) => {
 })
 
 // GET ALL USERS
-router.get("/", async (req, res) => {
+router.get("/", verifyTokenAndAdmin, async (req, res) => {
     const query = req.query.new
     try {
         const users = query ? await User.find().sort({ _id: -1 }).limit(5) : await User.find()
@@ -58,7 +58,7 @@ router.get("/", async (req, res) => {
 })
 
 // GET USER STATS
-router.get("/stats", async (req, res) => {
+router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
     const date = new Date()
     const lastYear = new Date(date.setFullYear(date.getFullYear() - 1))
     try {
@@ -73,15 +73,6 @@ router.get("/stats", async (req, res) => {
         return res.status(500).json(error)
     }
 })
-
-
-
-
-
-
-
-
-
 
 
 module.exports = router

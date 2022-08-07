@@ -5,8 +5,11 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import styled from 'styled-components'
 import { mobile } from '../responsive'
-import { useSelector } from "react-redux";
-import StripeCheckout from "react-stripe-checkout";
+import { useDispatch, useSelector } from "react-redux";
+import { removeProduct } from '../store/cartSlice';
+import { Link } from 'react-router-dom';
+
+
 
 const Container = styled.div`
     
@@ -157,24 +160,36 @@ background-color: black;
 color: white;
 border-radius: 5px
 `
-
+const Delete = styled.button`
+padding: 6px;
+border: none;
+background-color: red;
+color: white;
+border-radius: 5px
+`
 const Cart = () => {
+    const dispatch = useDispatch()
     const cart = useSelector(state => state.cart)
     const { products, cartQuantity, cartTotal } = cart
 
-    const handleCheckout = ()=>{
-        try {
-            const createSession = async () => {
-                const response = (await axios.post("/api/checkout/create-checkout-session",{ products, cartQuantity, cartTotal })).data
-                localStorage.setItem("paymentIntent",JSON.stringify(response.pi))
-                window.location.href=response.url
+    const handleCheckout = () => {
+
+        if (cartTotal > 0) {
+            try {
+                const createSession = async () => {
+                    const response = (await axios.post("/api/checkout/create-checkout-session", { products })).data
+                    localStorage.setItem("paymentIntent", JSON.stringify(response.pi))
+                    window.location.href = response.url
+                }
+                createSession()
+            } catch (error) {
+                console.log(error);
             }
-            createSession()
-        } catch (error) {
-            console.log(error);
         }
     }
-
+    const handleDelete = (product) => {
+        dispatch(removeProduct(product))
+    }
     return (
         <Container>
             <Announcement />
@@ -182,12 +197,14 @@ const Cart = () => {
             <Wrapper>
                 <Title>YOUR BAG</Title>
                 <Top>
-                    <TopButton>CONTINUE SHOPPING</TopButton>
+                    <Link to="/">
+                        <TopButton>CONTINUE SHOPPING</TopButton>
+                    </Link>
                     <TopTexts>
                         <TopText>Shopping Bag({cartQuantity})</TopText>
                         <TopText>Your Wishlist (0)</TopText>
                     </TopTexts>
-                    <TopButton type="filled">CHECKOUT NOW</TopButton>
+                    <TopButton type="filled" onClick={handleCheckout}>CHECKOUT NOW</TopButton>
                 </Top>
                 <Bottom>
                     <Info>
@@ -210,6 +227,9 @@ const Cart = () => {
                                 <ProductPrice>
                                     ${product.price}
                                 </ProductPrice>
+                                <Delete onClick={() => handleDelete(product)}>
+                                    Delete
+                                </Delete>
                             </Price>
                         </Product>
 
@@ -221,7 +241,7 @@ const Cart = () => {
                         <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                         <SummaryItem>
                             <SummaryText>Subtotal</SummaryText>
-                            <SummaryPrice>${cartTotal}</SummaryPrice>
+                            <SummaryPrice>${cartTotal / 100}</SummaryPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryText>Estimated Shipping</SummaryText>
@@ -233,11 +253,11 @@ const Cart = () => {
                         </SummaryItem>
                         <SummaryItem type="total">
                             <SummaryText>Total</SummaryText>
-                            <SummaryPrice>$ {cartTotal}</SummaryPrice>
+                            <SummaryPrice>$ {cartTotal / 100}</SummaryPrice>
                         </SummaryItem>
-                        
-                            <Button onClick={handleCheckout}>CHECKOUT NOW</Button>
-                        
+
+                        <Button onClick={handleCheckout}>CHECKOUT NOW</Button>
+
                     </Summary>
                 </Bottom>
             </Wrapper>
