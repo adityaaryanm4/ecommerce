@@ -1,6 +1,9 @@
 import React from 'react'
+import { useState } from 'react';
 import styled from 'styled-components'
 import { mobile } from '../responsive';
+import { login } from '../store/apiCalls';
+import {useDispatch} from "react-redux"
 
 const Container = styled.div`
     height: 100vh;
@@ -60,15 +63,30 @@ color: black;
 }
 `
 const Login = () => {
+    const dispatch = useDispatch()
+    const [user, setUser] = useState({
+        email: "",
+        password: ""
+    })
+    const handleChange = (event) => {
+        const { value, name } = event.target
+        setUser({...user,[name]:value})
+    }
+
+    const handleClick = (event) => {
+        
+        event.preventDefault()
+        login(dispatch,user)
+    }
+
     return (
         <Container>
             <Wrapper>
                 <Title>LOG IN</Title>
                 <Form>
-                    <Input type="name" placeholder="username"></Input>
-                    <Input type="email" placeholder="email"></Input>
-                    <Input type="password" placeholder="Password"></Input>
-                    <Button>Log In</Button>
+                    <Input type="email" name="email" placeholder="email" onChange={handleChange}></Input>
+                    <Input type="password" name="password" placeholder="Password" onChange={handleChange}></Input>
+                    <Button onClick={handleClick}>Log In</Button>
                 </Form>
                 <Link>FORGOT PASSWORD?</Link>
                 <Link>CREATE NEW ACCOUNT</Link>
