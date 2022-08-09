@@ -7,12 +7,12 @@ const { verifyTokenAndAuthorisation, verifyToken, verifyTokenAndAdmin } = requir
 
 // CREATE
 router.post("/", verifyToken, async (req, res) => {
-
-    const paymentIntent = await stripe.paymentIntents.retrieve(
-        req.body.paymentIntent
+    const { products, userId,paymentIntent } = req.body
+    
+    const billingDetails = await stripe.paymentIntents.retrieve(
+        paymentIntent
     );
-    console.log(paymentIntent)
-    const { products, userId } = req.body
+    
     const order = {
         userId,
     }

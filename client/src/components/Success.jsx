@@ -4,19 +4,20 @@ import {useSelector} from "react-redux"
 
 const Success = () => {
   const products = useSelector(state => state.cart.products)
+  const user = useSelector(state => state.user.currentUser) 
   useEffect(()=>{
 
     const paymentIntent = JSON.parse(localStorage.getItem("paymentIntent"))
 
     const makeRequest = async()=>{
       try {
-        const res = (await axios.post("/api/order",{products,paymentIntent,userId:"62d6e32dd4f4389e68a03687"})).data
+        const res = (await axios.post("/api/order",{products,paymentIntent,userId:user._id })).data
         console.log(res)
         
       } catch (error) {
         console.log(error)
       }
-      // 
+      
     }
     makeRequest()
    

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import styled from 'styled-components'
 import { mobile } from '../responsive';
 import { login } from '../store/apiCalls';
-import {useDispatch} from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 const Container = styled.div`
     height: 100vh;
@@ -52,6 +52,10 @@ const Button = styled.button`
     width: 40%;
     border-radius: 5px;
     margin-bottom: 10px;
+    &:disabled{
+        color:#66b2b2;
+        cursor: default;
+    }
 `
 const Link = styled.a`
 margin: 5px;
@@ -62,21 +66,27 @@ color: black;
     color: gray;
 }
 `
+const Error = styled.div`
+    color: red;
+`
 const Login = () => {
+
     const dispatch = useDispatch()
+    const { isFetching, error } = useSelector(state => state.user)
+
     const [user, setUser] = useState({
         email: "",
         password: ""
     })
     const handleChange = (event) => {
         const { value, name } = event.target
-        setUser({...user,[name]:value})
+        setUser({ ...user, [name]: value })
     }
 
     const handleClick = (event) => {
-        
+
         event.preventDefault()
-        login(dispatch,user)
+        login(dispatch, user)
     }
 
     return (
@@ -86,8 +96,9 @@ const Login = () => {
                 <Form>
                     <Input type="email" name="email" placeholder="email" onChange={handleChange}></Input>
                     <Input type="password" name="password" placeholder="Password" onChange={handleChange}></Input>
-                    <Button onClick={handleClick}>Log In</Button>
+                    <Button onClick={handleClick} disabled={isFetching}>{isFetching ? "Logging In..." : "Log In"}</Button>
                 </Form>
+                {error && <Error>Something went wrong...</Error>}
                 <Link>FORGOT PASSWORD?</Link>
                 <Link>CREATE NEW ACCOUNT</Link>
             </Wrapper>

@@ -1,11 +1,12 @@
 import { loginStart, loginSuccess, loginFailure } from "./userSlice"
-import axios from "axios"
+import { userRequest } from "../requestMethods"
 
 const login = async(dispatch,user) =>{
     dispatch(loginStart())
     try {
-        const res = (await axios.post("/api/auth/login",user)).data
-        dispatch(loginSuccess(res))
+        const res = (await userRequest.post("/api/auth/login",user)).data
+        if(res !== "Invalid ceredentials")
+            dispatch(loginSuccess(res))
     } catch (error) {
         dispatch(loginFailure())
     }

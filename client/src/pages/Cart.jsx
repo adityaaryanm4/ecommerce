@@ -170,14 +170,15 @@ border-radius: 5px
 const Cart = () => {
     const dispatch = useDispatch()
     const cart = useSelector(state => state.cart)
+    const user = useSelector(state => state.user.currentUser) 
     const { products, cartQuantity, cartTotal } = cart
 
     const handleCheckout = () => {
 
-        if (cartTotal > 0) {
+        if (cartTotal > 0 && user) {
             try {
                 const createSession = async () => {
-                    const response = (await axios.post("/api/checkout/create-checkout-session", { products })).data
+                    const response = (await axios.post("/api/checkout/create-checkout-session", { products})).data
                     localStorage.setItem("paymentIntent", JSON.stringify(response.pi))
                     window.location.href = response.url
                 }

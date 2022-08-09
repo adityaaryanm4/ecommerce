@@ -68,6 +68,7 @@ ${mobile({ fontSize: "16px", marginLeft: "5px" })}
   `
 const Navbar = () => {
   const cartQuantity = useSelector(state => state.cart.cartQuantity)
+  const user = useSelector(state => state.user.currentUser)
   return (
     <Container>
       <Wrapper>
@@ -84,17 +85,19 @@ const Navbar = () => {
         <Center><Logo>KARA.</Logo></Center>
 
         <Right>
+
+          {user && <MenuItem> {user.username} </MenuItem>}
           <MenuItem>
-            <Link to="/register" style={{textDecoration:"none",color:"black"}}>Register</Link>
+            <Link to="/register" style={{ textDecoration: "none", color: "black" }}>Register</Link>
           </MenuItem>
           <MenuItem>
-            <Link to="/login" style={{textDecoration:"none",color:"black"}}>Log In</Link>
+            <Link to="/login" style={{ textDecoration: "none", color: "black" }}>Log In</Link>
           </MenuItem>
           <MenuItem>
             { /* <Badge  showZero color="#108ee9">
           <ShoppingCartOutlined />
           </Badge> */}
-            <Link to="/cart" style={{textDecoration:"none",color:"black"}}>
+            <Link to="/cart" style={{ textDecoration: "none", color: "black" }}>
               cart: {cartQuantity}
             </Link>
           </MenuItem>
