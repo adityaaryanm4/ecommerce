@@ -7,20 +7,23 @@ const { verifyTokenAndAuthorisation, verifyToken, verifyTokenAndAdmin } = requir
 
 // CREATE
 router.post("/", verifyToken, async (req, res) => {
-    const { products, userId,paymentIntent } = req.body
-    
+    const { products, userId, paymentIntent } = req.body
+
     const billingDetails = await stripe.paymentIntents.retrieve(
         paymentIntent
     );
-    
+    const products2 = products.map(product => ({ productId: product._id, quantity: product.amount }))
+
     const order = {
-        userId,
+        userId, 
+        products: products2, 
+        amount: (billingDetails.amount) / 100, 
+        address: billingDetails.charges.data[0].billing_details.address
     }
     try {
-        // const newRecord = new Order(req.body)
-        // const savedRecord = await newRecord.save()
-        // res.status(200).json(savedRecord)
-        res.json(paymentIntent)
+        const newRecord = new Order(order)
+        const savedRecord = await newRecord.save()
+        res.status(200).json(savedRecord)
 
     } catch (error) {
         return res.status(500).json(error)

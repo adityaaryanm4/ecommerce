@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
@@ -10,6 +9,7 @@ import Newsletter from '../components/Newsletter'
 import { mobile } from '../responsive'
 import { addProduct } from '../store/cartSlice'
 import { useDispatch } from "react-redux";
+import { publicRequest } from '../requestMethods'
 
 
 const Wrapper = styled.div`
@@ -136,7 +136,7 @@ const Product = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = (await axios.get(`/api/product/find/${_id}`)).data
+                const response = (await publicRequest.get(`/api/product/find/${_id}`)).data
                 setProduct(response)
                 setLoader(false)
 

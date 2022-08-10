@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios';
 import {useSelector} from "react-redux"
+import { userRequest } from '../requestMethods';
 
 const Success = () => {
   const products = useSelector(state => state.cart.products)
@@ -11,7 +11,7 @@ const Success = () => {
 
     const makeRequest = async()=>{
       try {
-        const res = (await axios.post("/api/order",{products,paymentIntent,userId:user._id })).data
+        const res = (await userRequest.post("/api/order",{products,paymentIntent,userId:user._id })).data
         console.log(res)
         
       } catch (error) {

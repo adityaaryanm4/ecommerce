@@ -9,7 +9,6 @@ const { verifyToken } = require("./verifyToken")
 
 router.post('/create-checkout-session', verifyToken, async (req, res) => {
   try {
-    console.log(req.body)
     const { products } = req.body
 
     const session = await stripe.checkout.sessions.create({

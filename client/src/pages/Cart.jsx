@@ -8,6 +8,7 @@ import { mobile } from '../responsive'
 import { useDispatch, useSelector } from "react-redux";
 import { removeProduct } from '../store/cartSlice';
 import { Link } from 'react-router-dom';
+import { userRequest } from '../requestMethods';
 
 
 
@@ -178,7 +179,7 @@ const Cart = () => {
         if (cartTotal > 0 && user) {
             try {
                 const createSession = async () => {
-                    const response = (await axios.post("/api/checkout/create-checkout-session", { products})).data
+                    const response = (await userRequest.post("/api/checkout/create-checkout-session", { products})).data
                     localStorage.setItem("paymentIntent", JSON.stringify(response.pi))
                     window.location.href = response.url
                 }
