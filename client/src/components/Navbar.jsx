@@ -1,10 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Badge } from 'antd';
-import { SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
+import Badge from '@mui/material/Badge';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import PersonIcon from '@mui/icons-material/Person';
 import { mobile } from '../responsive';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
+import { logout } from '../store/userSlice';
 
 const Container = styled.div`
   height:60px;
@@ -57,6 +60,7 @@ const Logo = styled.h1`
 const Right = styled.div`
   flex: 1;
   display: flex;
+  align-items: center;
   justify-content: flex-end;
   ${mobile({ justifyContent: "center", flex: "2" })}
   `
@@ -66,9 +70,20 @@ cursor: pointer;
 margin-left: 16px;
 ${mobile({ fontSize: "16px", marginLeft: "5px" })}
   `
+const MenuWrapper = styled.div`
+display: flex;
+align-items: center;
+`
 const Navbar = () => {
+
+  const dispatch = useDispatch()
   const cartQuantity = useSelector(state => state.cart.cartQuantity)
   const user = useSelector(state => state.user.currentUser)
+
+  const handleLogout = () => {
+    dispatch(logout())
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -86,19 +101,32 @@ const Navbar = () => {
 
         <Right>
 
-          {user && <MenuItem> {user.username} </MenuItem>}
+          {user ?
+            <MenuWrapper>
+              <MenuItem 
+              style={{ fontWeight: "bold", fontSize: "24px", display:"flex",alignItems:"center",justifyContent:"center" }}> 
+              <PersonIcon style={{marginRight:"5px"}}/> 
+              {user.username} 
+              </MenuItem>
+              <MenuItem onClick={handleLogout}>
+                Log Out
+              </MenuItem>
+            </MenuWrapper>
+            :
+            <MenuWrapper>
+              <MenuItem>
+                <Link to="/register" style={{ textDecoration: "none", color: "black" }}>Register</Link>
+              </MenuItem>
+              <MenuItem>
+                <Link to="/login" style={{ textDecoration: "none", color: "black" }}>Log In</Link>
+              </MenuItem>
+            </MenuWrapper>
+          }
           <MenuItem>
-            <Link to="/register" style={{ textDecoration: "none", color: "black" }}>Register</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to="/login" style={{ textDecoration: "none", color: "black" }}>Log In</Link>
-          </MenuItem>
-          <MenuItem>
-            { /* <Badge  showZero color="#108ee9">
-          <ShoppingCartOutlined />
-          </Badge> */}
             <Link to="/cart" style={{ textDecoration: "none", color: "black" }}>
-              cart: {cartQuantity}
+              <Badge badgeContent={cartQuantity} showZero={true} color="secondary">
+                <ShoppingCartOutlinedIcon />
+              </Badge>
             </Link>
           </MenuItem>
         </Right>
