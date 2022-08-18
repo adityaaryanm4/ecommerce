@@ -1,7 +1,8 @@
 import { loginStart, loginSuccess, loginFailure } from "./userSlice"
-import { publicRequest, userRequest } from "../requestMethods"
+import { publicRequest } from "../requestMethod"
 
 const login = async(dispatch,user) =>{
+    console.log(user)
     dispatch(loginStart())
     try {
         const res = (await publicRequest.post("/api/auth/login",user)).data

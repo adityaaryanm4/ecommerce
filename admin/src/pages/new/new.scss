@@ -1,0 +1,82 @@
+.new {
+    display: flex;
+
+    .new-container {
+        flex: 6;
+
+        .top,
+        .bottom {
+            padding: 10px;
+            margin: 20px;
+            -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+            box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+            border-radius: 5px;
+            display: flex;
+
+            .title {
+                font-size: 20px;
+                color: lightgray;
+            }
+
+            .left {
+                flex: 1;
+                text-align: center;
+
+                .avatar {
+                    width: 100px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+            }
+
+            .right {
+                flex: 3;
+
+                form {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-around;
+                    gap: 30px;
+
+                    .form-input {
+                        width: 40%;
+                        display: flex;
+                        flex-direction: column;
+
+                        .label-file {
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+
+                            .drive-icon {
+                                cursor: pointer;
+                            }
+                        }
+
+                        input {
+                            border: none;
+                            border-bottom: 1px solid gray;
+                            outline: none;
+                            padding: 5px;
+                            width: 80%;
+                        }
+
+                        &.file-input {
+                            margin-bottom: 20px;
+                        }
+                    }
+
+                    button {
+                        padding: 10px 40px;
+                        background-color: teal;
+                        border: none;
+                        color: white;
+                        font-weight: bold;
+                        cursor: pointer;
+                        margin-top: 10px;
+                    }
+                }
+            }
+        }
+    }
+}
