@@ -1,109 +1,33 @@
 
 export const userColumns = [
-    { field: "id", headerName: "ID", width: 70 },
+    { field: "_id", headerName: "ID", width: 230 },
+
     {
         field: "user", headerName: "User", width: 230,
         renderCell: (params) => {
             return (<div className="cellWithImg">
-                <img className="cellImg" src={params.row.img} alt="avatar" />
+                <img className="cellImg"
+                    src={params.row.img ? params.row.img
+                        : "https://icon-library.com/images/no-user-image-icon/no-user-image-icon-27.jpg"}
+                    alt="avatar" />
                 <span>{params.row.username}</span>
             </div>)
         }
     },
+
     { field: "email", headerName: "Email", width: 230 }, //field name must be exact as mentioned in row data
+
     {
         field: "status", headerName: "Status", width: 160,
         renderCell: (params) => {
             return (
                 <div >
-                    <span className={`cellStatus ${params.row.status}`}>{params.row.status}</span>
+                    <span className={`cellStatus ${params.row.status}`}>
+                        {params.row.status}
+                        </span>
                 </div>
             )
         }
     }
 
 ]
-
-//temporary data
-export const userRows = [
-    {
-        id: 1,
-        username: "Snow",
-        img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-        status: "active",
-        email: "1snow@gmail.com",
-        age: 35,
-    },
-    {
-        id: 2,
-        username: "Jamie Lannister",
-        img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-        email: "2snow@gmail.com",
-        status: "passive",
-        age: 42,
-    },
-    {
-        id: 3,
-        username: "Lannister",
-        img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-        email: "3snow@gmail.com",
-        status: "pending",
-        age: 45,
-    },
-    {
-        id: 4,
-        username: "Stark",
-        img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-        email: "4snow@gmail.com",
-        status: "active",
-        age: 16,
-    },
-    {
-        id: 5,
-        username: "Targaryen",
-        img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-        email: "5snow@gmail.com",
-        status: "passive",
-        age: 22,
-    },
-    {
-        id: 6,
-        username: "Melisandre",
-        img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-        email: "6snow@gmail.com",
-        status: "active",
-        age: 15,
-    },
-    {
-        id: 7,
-        username: "Clifford",
-        img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-        email: "7snow@gmail.com",
-        status: "passive",
-        age: 44,
-    },
-    {
-        id: 8,
-        username: "Frances",
-        img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-        email: "8snow@gmail.com",
-        status: "active",
-        age: 36,
-    },
-    {
-        id: 9,
-        username: "Roxie",
-        img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-        email: "snow@gmail.com",
-        status: "pending",
-        age: 65,
-    },
-    {
-        id: 10,
-        username: "Roxie",
-        img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-        email: "snow@gmail.com",
-        status: "active",
-        age: 65,
-    },
-];

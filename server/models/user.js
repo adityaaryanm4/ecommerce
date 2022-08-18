@@ -19,8 +19,12 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    img: String
+    img: String,
+    status: {
+        type: String,
+        default: "active"
+    }
 }, { timestamps: true })
 
-const User = mongoose.model("User",userSchema)
+const User = mongoose.model("User", userSchema)
 module.exports = User
