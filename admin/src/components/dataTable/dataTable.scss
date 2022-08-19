@@ -9,7 +9,7 @@
     .add-btn-outer {
         width: 100%;
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
 
         .add-new-btn {
             padding: 6px;
@@ -17,6 +17,7 @@
             border-radius: 5px;
             color: green;
             margin: 10px 0;
+            cursor: pointer;
         }
     }
 
@@ -34,7 +35,8 @@
     }
 
 
-    .cellStatus {
+    .cellStatus,
+    .cellStock {
         padding: 10px;
         border-radius: 5px;
 
@@ -51,6 +53,16 @@
         }
 
         &.passive {
+            color: crimson;
+            background-color: rgba(255, 0, 0, 0.05);
+        }
+
+        &.true {
+            background-color: rgba(0, 128, 0, 0.05);
+            color: green;
+        }
+
+        &.false {
             color: crimson;
             background-color: rgba(255, 0, 0, 0.05);
         }
@@ -75,4 +87,5 @@
             cursor: pointer;
         }
     }
+
 }
