@@ -1,16 +1,8 @@
 import "./simpleChart.scss"
 import { AreaChart, Area, XAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-const data = [
-  { name: "January", Total: 1200 },
-  { name: "February", Total: 2100 },
-  { name: "March", Total: 800 },
-  { name: "April", Total: 1600 },
-  { name: "May", Total: 900 },
-  { name: "June", Total: 1700 },
-];
 
-const SimpleChart = ({ aspect, title }) => {
+const SimpleChart = ({ aspect, title, data }) => {
   return (
     <div className='simpleChart'>
       <div className="title">{title}</div>
@@ -36,7 +28,7 @@ const SimpleChart = ({ aspect, title }) => {
           <Tooltip />
 
           {/* main imp is this area */}
-          <Area dataKey="Total" type="monotone" stroke="#8884d8" fillOpacity={1} fill="url(#color)" />
+          <Area dataKey="TotalSales" type="monotone" stroke="#8884d8" fillOpacity={1} fill="url(#color)" />
 
         </AreaChart>
 

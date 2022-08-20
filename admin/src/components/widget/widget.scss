@@ -13,6 +13,10 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        a{
+            text-decoration: none;
+            color: black;
+        }
 
         .title {
             font-weight: bold;

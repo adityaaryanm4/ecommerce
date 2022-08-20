@@ -6,12 +6,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { userRequest } from '../../requestMethod'
-import {format} from "timeago.js"
+import dayjs from "dayjs"
+import relativeTime from 'dayjs/plugin/relativeTime'
+dayjs.extend(relativeTime)
 
 const ListContent = () => {
-  const [orders,setOrders] = useState([])
+  const [orders, setOrders] = useState([])
 
   useEffect(() => {
     const makeReq = async () => {
@@ -42,7 +44,7 @@ const ListContent = () => {
         </TableHead>
 
         <TableBody>
-          { orders.map((order) => (
+          {orders.map((order) => (
             <TableRow key={order._id}>
               <TableCell className="tableCell">{order._id} </TableCell>
               {/* <TableCell className="tableCell">
@@ -51,7 +53,7 @@ const ListContent = () => {
                   <span>{order.product}</span></div>
               </TableCell> */}
               {/* <TableCell className="tableCell">{order.customer}</TableCell> */}
-              <TableCell className="tableCell">{format(order.createdAt)}</TableCell>
+              <TableCell className="tableCell">{dayjs(order.createdAt).fromNow()}</TableCell>
               <TableCell className="tableCell">{order.amount}$</TableCell>
               {/* <TableCell className="tableCell">{order.method}</TableCell> */}
               <TableCell className="tableCell">

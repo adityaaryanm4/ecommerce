@@ -15,9 +15,9 @@ router.post("/", verifyToken, async (req, res) => {
     const products2 = products.map(product => ({ productId: product._id, quantity: product.amount }))
 
     const order = {
-        userId, 
-        products: products2, 
-        amount: (billingDetails.amount) / 100, 
+        userId,
+        products: products2,
+        amount: (billingDetails.amount) / 100,
         address: billingDetails.charges.data[0].billing_details.address
     }
     try {
@@ -94,6 +94,7 @@ router.get("/income", verifyTokenAndAdmin, async (req, res) => {
             { $group: { _id: "$month", totalSales: { $sum: "$sales" } } } //we'll group using month field. then, apply $sum method on their sales field
             //in this case, we'll hv 2 groups. June and July. and each will hv its total sale
         ])
+        res.status(200).json(income)
     } catch (error) {
         res.status(500).json(error)
     }
