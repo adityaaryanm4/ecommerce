@@ -4,6 +4,10 @@ import Sidebar from '../../components/sidebar/Sidebar'
 import { users } from "../../users"
 import SimpleChart from "../../components/simpleChart/SimpleChart"
 import ListContent from "../../components/listContent/ListContent"
+import { useEffect } from "react"
+import { publicRequest, userRequest } from "../../requestMethod"
+import { useParams } from "react-router-dom"
+import { useState } from "react"
 
 const ItemDetail = ({ itemKey, itemValue }) => {
     return (
@@ -14,7 +18,33 @@ const ItemDetail = ({ itemKey, itemValue }) => {
     )
 }
 
-const Single = () => {
+const Single = ({ path }) => {
+
+    const [product, setProduct] = useState({})
+    const [user, setUser] = useState({})
+
+    const { id } = useParams()
+
+    useEffect(() => {
+
+        try {
+            const makeReq = async () => {
+                if (path === "users") {
+                    const res = (await userRequest.get(`/api/user/find/${id}`)).data
+                    setUser(res)
+                }
+
+                else {
+                    const res = (await publicRequest.get(`/api/product/find/${id}`)).data
+                    setProduct(res)
+                }
+            }
+            makeReq()
+
+        } catch (error) {
+            console.log(error)
+        }
+    }, [])
 
     return (
         <div className="single">

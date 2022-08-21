@@ -11,52 +11,50 @@ const DataTable = ({ path }) => {
 
   useEffect(() => {
 
-    if (path === "users") {
+    const makeReq = async () => {
+      console.log("first")
 
-      const makeReqForUsers = async () => {
-        try {
+      try {
+        console.log("first")
+        if (path === "users") {
+        console.log("first")
+
           const res = (await userRequest.get("/api/user")).data
           setUsers(res)
-        } catch (error) {
-          console.log(error)
         }
-
-      }
-      makeReqForUsers()
-    }
-
-    else {
-      const makeReqForProducts = async () => {
-        try {
+        else {
           const res = (await publicRequest.get("/api/product")).data
           setProducts(res)
-        } catch (error) {
-          console.log(error)
         }
-
+      } catch (error) {
+        console.log(error)
       }
-      makeReqForProducts()
+
+      makeReq()
     }
+
   }, [path])
 
   const viewLatest = async () => {
 
-    if (path === "users") {
-      try {
+    try {
+      if (path === "users") {
         const res = (await userRequest.get("/api/user?new=true")).data
         setUsers(res)
-      } catch (error) {
-        console.log(error)
       }
-    }
-    else {
-      try {
+      else {
         const res = (await publicRequest.get("/api/product?new=true")).data
         setProducts(res)
-      } catch (error) {
-        console.log(error)
       }
+    } catch (error) {
+      console.log(error)
     }
+  }
+
+  const handleDelete = async (_id) => {
+    const res = (await userRequest.delete(`/api/product/${_id}`)).data
+    setProducts(products.filter(product => product._id !== _id))
+    console.log('We hv only few products. So did not "actually" deleted !')
   }
 
   const actionColumn = [{
@@ -67,7 +65,7 @@ const DataTable = ({ path }) => {
           <Link to={path === "users" ? `/users/${params.row._id}` : `/products/${params.row._id}`}>
             <span className="view-button">View</span>
           </Link>
-          <span className="del-button">Delete</span>
+          <span className="del-button" onClick={() => handleDelete(params.row._id)}>Delete</span>
         </div>
       )
     }
@@ -80,7 +78,7 @@ const DataTable = ({ path }) => {
 
         <div className="add-new-btn" onClick={viewLatest}>View Latest</div>
 
-        <Link to="/users/new">
+        <Link to={`/${path}/new`}>
           <div className="add-new-btn">Add New</div>
         </Link>
       </div>

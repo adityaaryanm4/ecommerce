@@ -4,21 +4,27 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
+import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 import { Link } from "react-router-dom"
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 
 const Widget = ({ type, stat }) => {
   const [amount, setAmount] = useState(0)
+  const [perc, setPerc] = useState(0)
+  const [cName, setCname] = useState("")
+  const [lastM, thisM] = stat
 
   useEffect(() => {
-    // setAmount(stat[1].TotalSales)
-  }, [])
-  console.log(amount)
-  let data
 
-  let cName = "positive"
-  let diff = "4"
-  console.log(amount)
+    setAmount(stat[1].TotalSales)
+    setPerc(
+      Math.floor(((thisM.TotalSales - lastM.TotalSales) * 100) / lastM.TotalSales)
+    )
+    perc < 0 ? setCname("negative") : setCname("positive")
+
+  }, [])
+
+  let data
   switch (type) {
 
     case "user":
@@ -73,7 +79,7 @@ const Widget = ({ type, stat }) => {
         <span className="link">{data.link}</span>
       </div>
       <div className="right">
-        <span className={`percentage ${cName}`}><KeyboardArrowUpIcon />{diff}%</span>
+        <span className={`percentage ${cName}`}>{cName === "positive" ? <KeyboardArrowUpIcon /> : <KeyboardArrowDown />}{perc}%</span>
         <span className="icon-span">{data.icon}</span>
       </div>
     </div>

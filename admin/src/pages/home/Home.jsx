@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import FeaturedChart from '../../components/featuredChart/FeaturedChart'
 import ListContent from '../../components/listContent/ListContent'
 import Navbar from '../../components/navbar/Navbar'
@@ -18,7 +18,6 @@ const Home = () => {
     try {
       const makeReq = async () => {
         const res = (await userRequest.get("/api/order/income")).data
-        console.log(res)
         res.map((item) =>
           setIncome((prevValue) => [...prevValue, { name: months[item._id - 1], TotalSales: item.totalSales }])
         )
@@ -32,14 +31,15 @@ const Home = () => {
 
   return (
     <div className='home'>
+      
       <Sidebar />
-      <div className="homeContainer">
+      {income.length>0 && <div className="homeContainer">
         <Navbar />
         <div className="widgets">
           <Widget type="user" stat={income}/>
-          <Widget type="order" />
-          <Widget type="earning" />
-          <Widget type="balance" />
+          <Widget type="order" stat={income}/>
+          <Widget type="earning" stat={income}/>
+          <Widget type="balance" stat={income}/>
         </div>
         <div className="charts">
           <FeaturedChart />
@@ -51,7 +51,7 @@ const Home = () => {
           <ListContent />
 
         </div>
-      </div>
+      </div>}
     </div>
   )
 }

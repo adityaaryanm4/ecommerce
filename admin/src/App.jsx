@@ -21,14 +21,14 @@ const App = () => {
           <Route path="/">
             <Route index element={<Home />} />
             <Route path="users" >
-              <Route index element={<List />} />
+              <Route index element={<List path="users"/>} />
               <Route path="new" element={<New newType={newUsers} title="Add New User" />} />
-              <Route path=":userId" element={<Single />} />
+              <Route path=":id" element={<Single path="users" />} />
             </Route>
             <Route path="products" >
-              <Route index element={<List />} />
+              <Route index element={<List path="products"/>} />
               <Route path="new" element={<New newType={newProducts} title="Add New Product" />} />
-              <Route path=":productId" element={<Single />} />
+              <Route path=":id" element={<Single path="products" />} />
             </Route>
             <Route path="login" element={<Login/>}/>
           </Route>
