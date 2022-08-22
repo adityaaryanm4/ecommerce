@@ -4,24 +4,50 @@ import Sidebar from '../../components/sidebar/Sidebar'
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import { useState } from "react";
 
-const FormInput = ({ newType }) => {
-    return (
+const New = ({ inputs, title, id }) => {
 
-        <div className="form-input">
-            <label>{newType.label}</label>
-            <input type={newType.type} placeholder={newType.placeholder} />
-        </div>
+    const [file, setFile] = useState("")
+    const [user, setUser] = useState({
+        fName: "",
+        lName: "",
+        phone: "",
+        email: "",
+        password: "",
+        address: "",
+        country: "",
 
-    )
-}
+    })
+    const [product, setProduct] = useState({
+        title: "",
+        description: "",
+        category: "",
+        price: "",
+        stock: "",
 
-const New = ({ newType, title }) => {
-
-    const [file, setFile] = useState()
+    })
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0]
         setFile(selectedFile)
+    }
+
+    const handleInputChange = (event) => {
+
+        const { name, value } = event.target
+
+        if (id === "user") {
+            setUser({ ...user, [name]: value })
+        }
+        else {
+            setProduct({ ...product, [name]: value })
+        }
+    }
+
+    const handleFormSubmit = (e) => {
+
+        e.preventDefault()
+        console.log(product)
+       
     }
 
     return (
@@ -40,7 +66,7 @@ const New = ({ newType, title }) => {
                             </div>
                         </div>
                         <div className="right">
-                            <form action="">
+                            <form onSubmit={handleFormSubmit}>
 
                                 <div className="form-input file-input">
                                     <label className="label-file" htmlFor="file"><span>Image:</span> <DriveFolderUploadIcon className="drive-icon" /></label>
@@ -50,11 +76,15 @@ const New = ({ newType, title }) => {
                                         onChange={handleFileChange} />
                                 </div>
 
-                                {newType.map(newType => {
-                                    return <FormInput key={newType.id} newType={newType} />
+                                {inputs.map(input => {
+                                    const { name, type, placeholder, label } = input
+                                    return <div key={input.id} className="form-input">
+                                        <label>{label}</label>
+                                        <input value={id === "user" ? user[name] : product[name]} name={name} type={type} placeholder={placeholder} onChange={handleInputChange} />
+                                    </div>
                                 })}
 
-                                <button>Send</button>
+                                <button type="submit">ADD</button>
                             </form>
                         </div>
                     </div>

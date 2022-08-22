@@ -4,7 +4,7 @@ import Home from './pages/home/Home'
 import List from './pages/list/List'
 import Single from './pages/single/Single'
 import New from './pages/new/New'
-import { newProducts, newUsers } from './formSource'
+import { productInputs, userInputs } from './formSource'
 import "./dark.scss"
 import { useSelector } from "react-redux"
 import Login from './pages/login/Login'
@@ -22,12 +22,12 @@ const App = () => {
             <Route index element={<Home />} />
             <Route path="users" >
               <Route index element={<List path="users"/>} />
-              <Route path="new" element={<New newType={newUsers} title="Add New User" />} />
+              <Route path="new" element={<New id="user" inputs={userInputs} title="Add New User" />} />
               <Route path=":id" element={<Single path="users" />} />
             </Route>
             <Route path="products" >
               <Route index element={<List path="products"/>} />
-              <Route path="new" element={<New newType={newProducts} title="Add New Product" />} />
+              <Route path="new" element={<New id="product" inputs={productInputs} title="Add New Product" />} />
               <Route path=":id" element={<Single path="products" />} />
             </Route>
             <Route path="login" element={<Login/>}/>

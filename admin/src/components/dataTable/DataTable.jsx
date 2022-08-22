@@ -12,13 +12,9 @@ const DataTable = ({ path }) => {
   useEffect(() => {
 
     const makeReq = async () => {
-      console.log("first")
 
       try {
-        console.log("first")
         if (path === "users") {
-        console.log("first")
-
           const res = (await userRequest.get("/api/user")).data
           setUsers(res)
         }
@@ -29,10 +25,8 @@ const DataTable = ({ path }) => {
       } catch (error) {
         console.log(error)
       }
-
-      makeReq()
     }
-
+    makeReq()
   }, [path])
 
   const viewLatest = async () => {
@@ -53,8 +47,9 @@ const DataTable = ({ path }) => {
 
   const handleDelete = async (_id) => {
     const res = (await userRequest.delete(`/api/product/${_id}`)).data
+    console.log(res)
     setProducts(products.filter(product => product._id !== _id))
-    console.log('We hv only few products. So did not "actually" deleted !')
+    console.log('We hv only few products. So did not "actually" delete !')
   }
 
   const actionColumn = [{
