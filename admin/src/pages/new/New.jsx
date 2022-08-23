@@ -4,6 +4,8 @@ import Sidebar from '../../components/sidebar/Sidebar'
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import { useState } from "react";
 import { publicRequest, userRequest } from '../../requestMethod'
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { app } from "../../firebase";
 
 const New = ({ inputs, title, id }) => {
 
@@ -29,7 +31,6 @@ const New = ({ inputs, title, id }) => {
         const selectedFile = event.target.files[0]
         setFile(selectedFile)
     }
-
     const handleInputChange = (event) => {
 
         const { name, value } = event.target
@@ -42,19 +43,69 @@ const New = ({ inputs, title, id }) => {
         }
     }
 
-    const handleFormSubmit = async (e) => {
+    const handleFormSubmit = (e) => {
 
         e.preventDefault()
 
-        if (id === "user") {
+        const storage = getStorage(app);
+        const fileName = new Date().getTime() + file.name //providing uniqueness to the filename
+        const storageRef = ref(storage, fileName);
+        const uploadTask = uploadBytesResumable(storageRef, file);
 
-            const res = await publicRequest.post("/api/auth/register", { username: user.username, email: user.email, password: user.password })
-            console.log(res.data)
-        }
-        else {
-            const res = await userRequest.post("/api/product", { username: user.username, email: user.email, password: user.password })
-        }
+        // Listen for state changes, errors, and completion of the upload.
+        uploadTask.on('state_changed',
+            (snapshot) => {
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                switch (snapshot.state) {
+                    case 'paused':
+                        console.log('Upload is paused');
+                        break;
+                    case 'running':
+                        console.log('Upload is running');
+                        break;
+                    default:
+                }
+            },
+            (error) => {
+                // A full list of error codes is available at
+                // https://firebase.google.com/docs/storage/web/handle-errors
+                switch (error.code) {
+                    case 'storage/unauthorized':
+                        // User doesn't have permission to access the object
+                        break;
+                    case 'storage/canceled':
+                        // User canceled the upload
+                        break;
 
+                    // ...
+
+                    case 'storage/unknown':
+                        // Unknown error occurred, inspect error.serverResponse
+                        break;
+                    default:
+                }
+            },
+            () => {
+                // Upload completed successfully, now we can get the download URL
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    makeReq(downloadURL)
+                });
+            }
+        );
+
+
+        // API CALL
+        const makeReq = async (img) => {
+            if (id === "user") {
+                const res = await publicRequest.post("/api/auth/register", { username: user.username, email: user.email, password: user.password, img })
+                console.log(res.data)
+            }
+            else {
+                const res = await userRequest.post("/api/product", { username: user.username, email: user.email, password: user.password })
+            }
+        }
     }
 
     return (

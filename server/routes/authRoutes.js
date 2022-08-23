@@ -10,10 +10,10 @@ const jwt = require("jsonwebtoken")
 
 router.post("/register", async (req, res) => {
 
-    const { username, email, password } = req.body
+    const { username, email, password, img } = req.body
     const hash = await bcrypt.hash(password, saltRound)
 
-    const newRecord = new User({ username, email, password: hash })
+    const newRecord = new User({ username, email, password: hash, img })
     try {
         const result = await newRecord.save()
 
@@ -42,10 +42,10 @@ router.post("/login", async (req, res) => {
                 const { password, ...others } = user._doc
 
                 const token = await jwt.sign(
-                    { _id: user._id, isAdmin: user.isAdmin }, 
-                    process.env.JWT_SEC, 
+                    { _id: user._id, isAdmin: user.isAdmin },
+                    process.env.JWT_SEC,
                     { expiresIn: "3d" })
-                    
+
                 res.status(200).send({ ...others, token })
             }
             else

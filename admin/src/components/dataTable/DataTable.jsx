@@ -46,10 +46,20 @@ const DataTable = ({ path }) => {
   }
 
   const handleDelete = async (_id) => {
-    const res = (await userRequest.delete(`/api/product/${_id}`)).data
-    console.log(res)
-    setProducts(products.filter(product => product._id !== _id))
-    console.log('We hv only few products. So did not "actually" delete !')
+
+    if (path === "users") {
+      const res = (await userRequest.delete(`/api/user/${_id}`)).data
+      console.log(res)
+      setUsers(users.filter(users => users._id !== _id))
+      console.log('We hv only few users. So did not "actually" delete !')
+
+    } else {
+      const res = (await userRequest.delete(`/api/product/${_id}`)).data
+      console.log(res)
+      setProducts(products.filter(product => product._id !== _id))
+      console.log('We hv only few products. So did not "actually" delete !')
+    }
+
   }
 
   const actionColumn = [{
