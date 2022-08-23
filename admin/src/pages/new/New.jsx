@@ -3,18 +3,17 @@ import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import { useState } from "react";
+import { publicRequest, userRequest } from '../../requestMethod'
 
 const New = ({ inputs, title, id }) => {
 
     const [file, setFile] = useState("")
     const [user, setUser] = useState({
-        fName: "",
-        lName: "",
-        phone: "",
+        username: "",
         email: "",
         password: "",
-        address: "",
-        country: "",
+        cPassword: "",
+        admin: "",
 
     })
     const [product, setProduct] = useState({
@@ -43,11 +42,19 @@ const New = ({ inputs, title, id }) => {
         }
     }
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
 
         e.preventDefault()
-        console.log(product)
-       
+
+        if (id === "user") {
+
+            const res = await publicRequest.post("/api/auth/register", { username: user.username, email: user.email, password: user.password })
+            console.log(res.data)
+        }
+        else {
+            const res = await userRequest.post("/api/product", { username: user.username, email: user.email, password: user.password })
+        }
+
     }
 
     return (
@@ -78,13 +85,25 @@ const New = ({ inputs, title, id }) => {
 
                                 {inputs.map(input => {
                                     const { name, type, placeholder, label } = input
-                                    return <div key={input.id} className="form-input">
+
+
+
+                                    return name === "stock" || name === "admin" ? <div key={name} className="form-input">
+                                        <label>{label}</label>
+                                        <select name={name} onChange={handleInputChange}>
+                                            <option defaultValue="disabled">Select</option>
+                                            <option value="false">No</option>
+                                            <option value="true">Yes</option>
+                                        </select>
+                                    </div> : <div key={name} className="form-input">
                                         <label>{label}</label>
                                         <input value={id === "user" ? user[name] : product[name]} name={name} type={type} placeholder={placeholder} onChange={handleInputChange} />
                                     </div>
+
+
                                 })}
 
-                                <button type="submit">ADD</button>
+                                <button name={id} type="submit">ADD</button>
                             </form>
                         </div>
                     </div>
