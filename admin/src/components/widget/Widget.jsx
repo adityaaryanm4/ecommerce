@@ -1,4 +1,5 @@
 import "./widget.scss"
+import { useEffect, useState } from "react";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
@@ -6,7 +7,6 @@ import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlin
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 import { Link } from "react-router-dom"
-import { useEffect, useState } from "react";
 
 const Widget = ({ type, stat }) => {
   const [amount, setAmount] = useState(0)
@@ -22,7 +22,7 @@ const Widget = ({ type, stat }) => {
     )
     perc < 0 ? setCname("negative") : setCname("positive")
 
-  }, [])
+  }, [stat,thisM,lastM,perc])
 
   let data
   switch (type) {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import FeaturedChart from '../../components/featuredChart/FeaturedChart'
 import ListContent from '../../components/listContent/ListContent'
 import Navbar from '../../components/navbar/Navbar'
@@ -12,7 +12,7 @@ const Home = () => {
 
   const [income, setIncome] = useState([])
 
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  const months = useMemo(() => ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], [])
 
   useEffect(() => {
     try {
@@ -27,19 +27,18 @@ const Home = () => {
     catch (error) {
       console.log(error)
     }
-  }, [])
+  }, [months])
 
   return (
     <div className='home'>
-      
       <Sidebar />
-      {income.length>0 && <div className="homeContainer">
+      {income.length > 0 && <div className="homeContainer">
         <Navbar />
         <div className="widgets">
-          <Widget type="user" stat={income}/>
-          <Widget type="order" stat={income}/>
-          <Widget type="earning" stat={income}/>
-          <Widget type="balance" stat={income}/>
+          <Widget type="user" stat={income} />
+          <Widget type="order" stat={income} />
+          <Widget type="earning" stat={income} />
+          <Widget type="balance" stat={income} />
         </div>
         <div className="charts">
           <FeaturedChart />

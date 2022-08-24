@@ -77,6 +77,8 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
 
 // GET MONTHLY INCOME
 router.get("/income", verifyTokenAndAdmin, async (req, res) => {
+    const productId = req.query.pid
+    console.log(productId)
     const date = new Date() //like: Aug. 1st
     const lastMonth = new Date(date.setMonth(date.getMonth() - 1)) //this'll be: July 1st
     const secLastMonth = new Date(date.setMonth(lastMonth.getMonth() - 1))//this'll be: June1st
@@ -84,7 +86,12 @@ router.get("/income", verifyTokenAndAdmin, async (req, res) => {
 
     try {
         const income = await Order.aggregate([
-            { $match: { createdAt: { $gte: secLastMonth } } }, //getting all orders which were created after/on second last month i.e. June  1st
+            {
+                $match: {
+                    createdAt: { $gte: secLastMonth }, //getting all orders which were created after/on second last month i.e. June  1st
+                    ...(productId && { products: { $elemMatch: {productId:productId} } }) //"products" is an array inside our "orders"
+                }
+            },
             {
                 $project: {
                     month: { $month: "$createdAt" },   //using $month method, extracted month value from createdAt field and put into "month" variable
@@ -94,6 +101,7 @@ router.get("/income", verifyTokenAndAdmin, async (req, res) => {
             { $group: { _id: "$month", totalSales: { $sum: "$sales" } } } //we'll group using month field. then, apply $sum method on their sales field
             //in this case, we'll hv 2 groups. June and July. and each will hv its total sale
         ])
+        income.sort((a, b) => a._id - b._id)
         res.status(200).json(income)
     } catch (error) {
         res.status(500).json(error)

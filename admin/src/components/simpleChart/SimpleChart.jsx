@@ -2,7 +2,7 @@ import "./simpleChart.scss"
 import { AreaChart, Area, XAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 
-const SimpleChart = ({ aspect, title, data }) => {
+const SimpleChart = ({ data,aspect, title  }) => {
   return (
     <div className='simpleChart'>
       <div className="title">{title}</div>

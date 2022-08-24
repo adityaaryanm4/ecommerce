@@ -7,7 +7,7 @@ import ListContent from "../../components/listContent/ListContent"
 import { useEffect } from "react"
 import { publicRequest, userRequest } from "../../requestMethod"
 import { useParams } from "react-router-dom"
-import { useState } from "react"
+import { useState,useMemo } from "react"
 
 const ItemDetail = ({ itemKey, itemValue }) => {
     return (
@@ -22,9 +22,10 @@ const Single = ({ path }) => {
 
     const [product, setProduct] = useState({})
     const [user, setUser] = useState({})
+    const [pStat, setPStat] = useState([])
 
     const { id } = useParams()
-
+    const months = useMemo(() => ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], [])
     useEffect(() => {
 
         try {
@@ -44,8 +45,29 @@ const Single = ({ path }) => {
         } catch (error) {
             console.log(error)
         }
-    }, [])
+    }, [path,id])
 
+    useEffect(() => {
+
+        try {
+            const makeReq = async () => {
+                if (path === "users") {
+                    // const res = (await userRequest.get(`/api/user/find/${id}`)).data
+                    // setUser(res)
+                }
+
+                else {
+                    const res = (await userRequest.get(`/api/order/income?pid=${id}`)).data
+                    res.map(item=>setPStat(prev=>[...prev,{name:months[item._id-1],TotalSales:item.totalSales}]))
+                }
+            }
+            makeReq()
+
+        } catch (error) {
+            console.log(error)
+        }
+    }, [path,id,months])
+console.log(pStat)
     return (
         <div className="single">
             <Sidebar />
@@ -70,7 +92,7 @@ const Single = ({ path }) => {
                         </div>
                     </div>
                     <div className="right">
-                        <SimpleChart aspect={3 / 1} title="user spending (Last 6 months)" />
+                        <SimpleChart data={pStat} aspect={3 / 1} title="user spending (Last 6 months)" />
                     </div>
                 </div>
                 <div className="bottom">
