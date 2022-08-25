@@ -42,7 +42,7 @@ const Home = () => {
         </div>
         <div className="charts">
           <FeaturedChart />
-          <SimpleChart data={income} aspect={2 / 1} title="Revenue (Last 2 months)" />
+          <SimpleChart data={income} dataKey="TotalSales" aspect={2 / 1} title="Revenue (Last 2 months)" />
         </div>
         <div className="listContainer">
 

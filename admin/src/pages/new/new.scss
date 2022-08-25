@@ -35,7 +35,6 @@
                 form {
                     display: flex;
                     flex-wrap: wrap;
-                    justify-content: space-around;
                     gap: 30px;
 
                     .form-input {
@@ -70,10 +69,12 @@
                         padding: 10px 40px;
                         background-color: teal;
                         border: none;
+                        border-radius: 5px;
                         color: white;
                         font-weight: bold;
                         cursor: pointer;
                         margin-top: 10px;
+                        outline: none;
                     }
                 }
             }

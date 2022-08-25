@@ -6,10 +6,12 @@ const { verifyTokenAndAdmin } = require("./verifyToken")
 
 // CREATE
 router.post("/", verifyTokenAndAdmin, async (req, res) => {
+    console.log(req.body)
     try {
-        const newRecord = new Product(req.body)
-        const savedRecord = await newRecord.save()
-        res.status(200).json(savedRecord)
+        // const newRecord = new Product(req.body)
+        // const savedRecord = await newRecord.save()
+        // res.status(200).json(savedRecord)
+        res.status(200).json("done")
 
     } catch (error) {
         return res.status(500).json(error)

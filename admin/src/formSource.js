@@ -1,76 +1,73 @@
 export const userInputs = [
 
   {
-    label: "Admin",
-    placeholder: "",
+    label: "Password",
+    placeholder: "atleast 8 characters",
     type: "password",
-    name: "admin"
+    name: "password"
   },
-
   {
     label: "Username",
     placeholder: "john_dew",
     type: "name",
     name: "username"
   },
-
   {
-    label: "Password",
-    placeholder: "",
+    label: "Confirm Password",
+    placeholder: "confirm password",
     type: "password",
-    name: "password"
+    name: "cPassword"
   },
-  
   {
     label: "Email",
     placeholder: "john.dew@nowhere.com",
     type: "email",
     name: "email"
   },
-
-  {
-    label: "Confirm Password",
-    placeholder: "",
-    type: "password",
-    name: "cPassword"
-  },
-
 ]
 
 export const productInputs = [
-  {
-    id: 1,
-    label: "Title",
-    type: "text",
-    placeholder: "Apple Macbook Pro",
-    name: "title"
-  },
-  {
-    id: 2,
-    label: "Description",
-    type: "text",
-    placeholder: "Description",
-    name: "description"
-  },
-  {
-    id: 3,
-    label: "Category",
-    type: "text",
-    placeholder: "Computers",
-    name: "category"
-  },
-  {
-    id: 4,
+   {
     label: "Price",
     type: "text",
     placeholder: "100",
     name: "price"
   },
   {
-    id: 5,
+    label: "Title",
+    type: "text",
+    placeholder: "LagoonShirt",
+    name: "title"
+  },
+  {
+    label: "Category",
+    type: "text",
+    placeholder: "men, women",
+    name: "categories"
+  },
+ 
+  {
+    label: "Description",
+    type: "text",
+    placeholder: "lorem ipsum dolor sit amet consectetur",
+    name: "desc"
+  },
+  {
     label: "Stock",
     type: "text",
     placeholder: "in stock",
-    name: "stock"
+    name: "inStock"
+  },
+  {
+    label: "Color",
+    type: "text",
+    placeholder: "red, black",
+    name: "color"
+  },
+  {
+    label: "Size",
+    type: "text",
+    placeholder: "M, L",
+    name: "size"
   },
 ];

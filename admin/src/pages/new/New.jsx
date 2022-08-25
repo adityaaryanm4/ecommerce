@@ -15,16 +15,15 @@ const New = ({ inputs, title, id }) => {
         email: "",
         password: "",
         cPassword: "",
-        admin: "",
-
     })
+    const [categories, setCat] = useState([])
+    const [color, setCol] = useState([])
+    const [size, setSize] = useState([])
     const [product, setProduct] = useState({
         title: "",
-        description: "",
-        category: "",
+        desc: "",
         price: "",
-        stock: "",
-
+        inStock: ""
     })
 
     const handleFileChange = (event) => {
@@ -39,7 +38,21 @@ const New = ({ inputs, title, id }) => {
             setUser({ ...user, [name]: value })
         }
         else {
-            setProduct({ ...product, [name]: value })
+            switch (name) {
+                case "categories":
+                    setCat(value.split(","))
+                    break
+                case "color":
+                    setCol(value.split(","))
+                    break
+                case "size":
+                    setSize(value.split(","))
+                    break
+
+                default:
+                    setProduct({ ...product, [name]: value })
+                    break
+            }
         }
     }
 
@@ -47,63 +60,70 @@ const New = ({ inputs, title, id }) => {
 
         e.preventDefault()
 
-        const storage = getStorage(app);
-        const fileName = new Date().getTime() + file.name //providing uniqueness to the filename
-        const storageRef = ref(storage, fileName);
-        const uploadTask = uploadBytesResumable(storageRef, file);
+        if (!file) {
+            alert("Select The Image As Well")
+        }
+        else {
+            const storage = getStorage(app);
+            const fileName = new Date().getTime() + file.name //providing uniqueness to the filename
+            const storageRef = ref(storage, fileName);
+            const uploadTask = uploadBytesResumable(storageRef, file);
 
-        // Listen for state changes, errors, and completion of the upload.
-        uploadTask.on('state_changed',
-            (snapshot) => {
-                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('Upload is ' + progress + '% done');
-                switch (snapshot.state) {
-                    case 'paused':
-                        console.log('Upload is paused');
-                        break;
-                    case 'running':
-                        console.log('Upload is running');
-                        break;
-                    default:
+            // Listen for state changes, errors, and completion of the upload.
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
+                    switch (snapshot.state) {
+                        case 'paused':
+                            console.log('Upload is paused');
+                            break;
+                        case 'running':
+                            console.log('Upload is running');
+                            break;
+                        default:
+                    }
+                },
+                (error) => {
+                    // A full list of error codes is available at
+                    // https://firebase.google.com/docs/storage/web/handle-errors
+                    switch (error.code) {
+                        case 'storage/unauthorized':
+                            // User doesn't have permission to access the object
+                            break;
+                        case 'storage/canceled':
+                            // User canceled the upload
+                            break;
+
+                        // ...
+
+                        case 'storage/unknown':
+                            // Unknown error occurred, inspect error.serverResponse
+                            break;
+                        default:
+                    }
+                },
+                () => {
+                    // Upload completed successfully, now we can get the download URL
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        makeReq(downloadURL)
+                    });
                 }
-            },
-            (error) => {
-                // A full list of error codes is available at
-                // https://firebase.google.com/docs/storage/web/handle-errors
-                switch (error.code) {
-                    case 'storage/unauthorized':
-                        // User doesn't have permission to access the object
-                        break;
-                    case 'storage/canceled':
-                        // User canceled the upload
-                        break;
+            );
 
-                    // ...
 
-                    case 'storage/unknown':
-                        // Unknown error occurred, inspect error.serverResponse
-                        break;
-                    default:
+            // API CALL
+            const makeReq = async (img) => {
+                if (id === "user") {
+                    const res = await publicRequest.post("/api/auth/register", { ...user, img })
+                    console.log(res.data)
                 }
-            },
-            () => {
-                // Upload completed successfully, now we can get the download URL
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    makeReq(downloadURL)
-                });
-            }
-        );
-
-
-        // API CALL
-        const makeReq = async (img) => {
-            if (id === "user") {
-                const res = await publicRequest.post("/api/auth/register", { username: user.username, email: user.email, password: user.password, img })
-                console.log(res.data)
-            }
-            else {
-                const res = await userRequest.post("/api/product", { username: user.username, email: user.email, password: user.password })
+                else {
+                    const res = await userRequest.post("/api/product", { ...product, categories, color, size,img })
+                    console.log(res.data)
+                }
+                window.location.href = `/${id}s` //since "id" is either "user" / "product". to redirect to "users"/"products" routes 
             }
         }
     }
@@ -137,18 +157,16 @@ const New = ({ inputs, title, id }) => {
                                 {inputs.map(input => {
                                     const { name, type, placeholder, label } = input
 
-
-
-                                    return name === "stock" || name === "admin" ? <div key={name} className="form-input">
+                                    return name === "inStock" ? <div key={name} className="form-input">
                                         <label>{label}</label>
-                                        <select name={name} onChange={handleInputChange}>
-                                            <option defaultValue="disabled">Select</option>
+                                        <select defaultValue="Select" name={name} onChange={handleInputChange}>
+                                            <option value="Select" disabled>Select</option>
                                             <option value="false">No</option>
                                             <option value="true">Yes</option>
                                         </select>
                                     </div> : <div key={name} className="form-input">
                                         <label>{label}</label>
-                                        <input value={id === "user" ? user[name] : product[name]} name={name} type={type} placeholder={placeholder} onChange={handleInputChange} />
+                                        <input name={name} type={type} placeholder={placeholder} onChange={handleInputChange} />
                                     </div>
 
 

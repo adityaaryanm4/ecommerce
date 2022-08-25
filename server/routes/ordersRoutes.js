@@ -78,11 +78,9 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
 // GET MONTHLY INCOME
 router.get("/income", verifyTokenAndAdmin, async (req, res) => {
     const productId = req.query.pid
-    console.log(productId)
     const date = new Date() //like: Aug. 1st
     const lastMonth = new Date(date.setMonth(date.getMonth() - 1)) //this'll be: July 1st
     const secLastMonth = new Date(date.setMonth(lastMonth.getMonth() - 1))//this'll be: June1st
-
 
     try {
         const income = await Order.aggregate([
