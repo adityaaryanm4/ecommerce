@@ -67,6 +67,7 @@ const FilterColor = styled.div`
 const Select = styled.select`
    padding: 10px;
    margin-left: 20px;
+   outline: none;
 `
 const Option = styled.option`
    
@@ -104,6 +105,7 @@ align-items: center;
 const Button = styled.button`
     padding: 12px 32px;
     border: 2px solid teal;
+    border-radius: 5px;
     cursor: pointer;
     background-color: white;
     &:hover{
@@ -173,9 +175,9 @@ const Product = () => {
                             setSize(event.target.value)
                         }}>
                             Size:
-                            <Select >
+                            <Select defaultValue="Select">
+                            <option disabled value="Select">Select</option>
                                 {product.size.map((item) => <Option value={item} key={item} >{item}</Option>)}
-                                {console.log(size, color)}
                             </Select>
                         </Filter>
                     </FilterContainer>

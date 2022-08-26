@@ -32,13 +32,10 @@ const ListContent = () => {
 
           <TableRow>
             <TableCell className="tableCell">Tracking Id</TableCell>
-            {/* <TableCell className="tableCell">Product</TableCell> */}
-            {/* <TableCell className="tableCell">Customer</TableCell> */}
             <TableCell className="tableCell">Date</TableCell>
+            <TableCell className="tableCell">Country</TableCell>
             <TableCell className="tableCell">Amount </TableCell>
-            {/* <TableCell className="tableCell">Payment</TableCell> */}
             <TableCell className="tableCell">Status</TableCell>
-
           </TableRow>
 
         </TableHead>
@@ -47,15 +44,9 @@ const ListContent = () => {
           {orders.map((order) => (
             <TableRow key={order._id}>
               <TableCell className="tableCell">{order._id} </TableCell>
-              {/* <TableCell className="tableCell">
-                <div className="product-cell">
-                  <img className="image" src={order.img} alt="product_img" />
-                  <span>{order.product}</span></div>
-              </TableCell> */}
-              {/* <TableCell className="tableCell">{order.customer}</TableCell> */}
               <TableCell className="tableCell">{dayjs(order.createdAt).fromNow()}</TableCell>
-              <TableCell className="tableCell">{order.amount}$</TableCell>
-              {/* <TableCell className="tableCell">{order.method}</TableCell> */}
+              <TableCell className="tableCell">${order.address.country}</TableCell>
+              <TableCell className="tableCell">${order.amount}</TableCell>
               <TableCell className="tableCell">
                 <span className={`status ${order.status}`}>
                   {order.status}</span>

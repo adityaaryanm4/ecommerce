@@ -1,9 +1,10 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import styled from 'styled-components'
 import { mobile } from '../responsive';
 import { login } from '../store/apiCalls';
 import { useDispatch, useSelector } from "react-redux"
+import { errorDefault } from '../store/userSlice';
 
 const Container = styled.div`
     height: 100vh;
@@ -73,6 +74,12 @@ const Login = () => {
 
     const dispatch = useDispatch()
     const { isFetching, error } = useSelector(state => state.user)
+
+    //to set "error" to "false" on refresh/reload
+    useEffect(()=>{
+        dispatch(errorDefault())
+    },[dispatch])
+
 
     const [user, setUser] = useState({
         email: "",
