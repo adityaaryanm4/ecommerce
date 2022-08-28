@@ -11,6 +11,10 @@ app.use(express.json())
 const cors = require("cors")
 app.use(cors());
 
+app.get("/",(req,res)=>{
+    res.send("backend is running !")
+})
+
 const usersRoutes = require("./routes/usersRoutes")
 app.use("/api/user",usersRoutes)
 
@@ -29,5 +33,4 @@ app.use("/api/cart",cartRoutes)
 const ordersRoutes = require("./routes/ordersRoutes")
 app.use("/api/order",ordersRoutes)
 
-const PORT = 5000
-app.listen(process.env.PORT || PORT, ()=>{console.log(`Server started at PORT ${PORT}`)})
+app.listen(process.env.PORT || 5000, ()=>{console.log(`Server started at PORT ${process.env.PORT}`)})
