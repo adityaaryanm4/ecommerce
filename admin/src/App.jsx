@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import Home from './pages/home/Home'
 import List from './pages/list/List'
 import Single from './pages/single/Single'
@@ -12,26 +12,29 @@ import Login from './pages/login/Login'
 const App = () => {
 
   const { darkMode } = useSelector(state => state.mode)
+  const user = useSelector(state => state.user.currentUser)
 
   return (
 
     <div className={darkMode ? "app dark" : "app"}>
       <BrowserRouter>
         <Routes>
-          <Route path="/">
-            <Route index element={<Home />} />
-            <Route path="users" >
-              <Route index element={<List path="users"/>} />
-              <Route path="new" element={<New id="user" inputs={userInputs} title="Add New User" />} />
-              <Route path=":id" element={<Single path="users" />} />
+          <Route path="/login" element={<Login />} />
+          {!user ? <Navigate to="/login" /> :
+            <Route path="/">
+              <Route index element={<Home />} />
+              <Route path="users" >
+                <Route index element={<List path="users" />} />
+                <Route path="new" element={<New id="user" inputs={userInputs} title="Add New User" />} />
+                <Route path=":id" element={<Single path="users" />} />
+              </Route>
+              <Route path="products" >
+                <Route index element={<List path="products" />} />
+                <Route path="new" element={<New id="product" inputs={productInputs} title="Add New Product" />} />
+                <Route path=":id" element={<Single path="products" />} />
+              </Route>
             </Route>
-            <Route path="products" >
-              <Route index element={<List path="products"/>} />
-              <Route path="new" element={<New id="product" inputs={productInputs} title="Add New Product" />} />
-              <Route path=":id" element={<Single path="products" />} />
-            </Route>
-            <Route path="login" element={<Login/>}/>
-          </Route>
+          }
         </Routes>
       </BrowserRouter>
     </div>

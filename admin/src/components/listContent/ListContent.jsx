@@ -45,7 +45,7 @@ const ListContent = () => {
             <TableRow key={order._id}>
               <TableCell className="tableCell">{order._id} </TableCell>
               <TableCell className="tableCell">{dayjs(order.createdAt).fromNow()}</TableCell>
-              <TableCell className="tableCell">${order.address.country}</TableCell>
+              <TableCell className="tableCell">{order.address.country}</TableCell>
               <TableCell className="tableCell">${order.amount}</TableCell>
               <TableCell className="tableCell">
                 <span className={`status ${order.status}`}>
