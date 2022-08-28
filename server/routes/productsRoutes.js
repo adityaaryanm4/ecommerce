@@ -6,11 +6,10 @@ const { verifyTokenAndAdmin } = require("./verifyToken")
 
 // CREATE
 router.post("/", verifyTokenAndAdmin, async (req, res) => {
-    console.log(req.body)
     try {
-        // const newRecord = new Product(req.body)
-        // const savedRecord = await newRecord.save()
-        // res.status(200).json(savedRecord)
+        const newRecord = new Product(req.body)
+        const savedRecord = await newRecord.save()
+        res.status(200).json(savedRecord)
         res.status(200).json("done")
 
     } catch (error) {
@@ -34,7 +33,7 @@ router.put("/:_id", verifyTokenAndAdmin, async (req, res) => {
 // DELETE
 router.delete("/:_id", verifyTokenAndAdmin, async (req, res) => {
     try {
-        // await Product.findByIdAndDelete(req.params._id)
+        await Product.findByIdAndDelete(req.params._id)
         res.status(200).json("Product has been deleted")
 
     } catch (error) {

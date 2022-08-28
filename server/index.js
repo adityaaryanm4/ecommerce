@@ -29,7 +29,5 @@ app.use("/api/cart",cartRoutes)
 const ordersRoutes = require("./routes/ordersRoutes")
 app.use("/api/order",ordersRoutes)
 
-
-
 const PORT = 5000
-app.listen(PORT, ()=>{console.log(`Server started at PORT ${PORT}`)})
+app.listen(process.env.PORT || PORT, ()=>{console.log(`Server started at PORT ${PORT}`)})

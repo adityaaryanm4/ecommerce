@@ -3,8 +3,6 @@ const router = express.Router()
 
 const stripe = require("stripe")(process.env.STRIPE_KEY)
 
-const DOMAIN = "http://localhost:3000"
-
 const { verifyToken } = require("./verifyToken")
 
 router.post('/create-checkout-session', verifyToken, async (req, res) => {
@@ -26,8 +24,8 @@ router.post('/create-checkout-session', verifyToken, async (req, res) => {
         }
       }),
       mode: 'payment',
-      success_url: `${DOMAIN}/success`,
-      cancel_url: `${DOMAIN}/cancel`,
+      success_url: `${process.env.DOMAIN}/success`,
+      cancel_url: `${process.env.DOMAIN}/cancel`,
     });
     res.json({ pi: session.payment_intent, url: session.url });
 
