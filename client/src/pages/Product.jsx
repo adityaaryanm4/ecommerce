@@ -139,16 +139,17 @@ const Product = () => {
             try {
 
                 const res = (await userRequest.get(`/api/cart/find/${user._id}`)).data  //first , we ll find the user's cart
+
                 if (!res) { //if no cart is there, we ll set up a new one
-                    const response = (await userRequest.post(`/api/cart/`, { userId: user._id, products: [{ productId: product._id, quantity: amount, color, size }] })).data
+                    await userRequest.post(`/api/cart/`, { userId: user._id, products: [{ productId: product._id, quantity: amount, color, size }] })
 
                 }
                 else {   //if cart exists, we ll simply push the new choosen products into it i.e. update the cart
-                    const response = (await userRequest.put(`/api/cart/${res._id}`, { products: [...res.products, { productId: product._id, quantity: amount, color, size }] }))
+                    await userRequest.put(`/api/cart/${user._id}`, { cartId: res._id, prodObj: { products: [...res.products, { productId: product._id, quantity: amount, color, size }] } })
                 }
-                
-            } catch (error) {
 
+            } catch (error) {
+                console.log(error)
             }
 
         }

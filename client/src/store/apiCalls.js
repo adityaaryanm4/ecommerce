@@ -1,5 +1,5 @@
 import { loginStart, loginSuccess, loginFailure } from "./userSlice"
-import { publicRequest, userRequest } from "../requestMethods"
+import { publicRequest } from "../requestMethods"
 
 const login = async(dispatch,user) =>{
     dispatch(loginStart())
@@ -15,8 +15,4 @@ const login = async(dispatch,user) =>{
     }
 }
 
-const addToCartDB = async ()=>{
-
-}
-
-export {login,addToCartDB}
+export {login}
