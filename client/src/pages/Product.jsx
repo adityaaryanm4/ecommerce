@@ -8,8 +8,8 @@ import Navbar from '../components/Navbar'
 import Newsletter from '../components/Newsletter'
 import { mobile } from '../responsive'
 import { addProduct } from '../store/cartSlice'
-import { useDispatch } from "react-redux";
-import { publicRequest } from '../requestMethods'
+import { useDispatch, useSelector } from "react-redux";
+import { publicRequest, userRequest } from '../requestMethods'
 
 
 const Wrapper = styled.div`
@@ -122,6 +122,7 @@ const Product = () => {
     const [amount, setAmount] = useState(1)
     const [color, setColor] = useState("")
     const [size, setSize] = useState("")
+    const user = useSelector(state => state.user.currentUser)
 
     const handleAmountChange = (type) => {
         if (type === "inc") {
@@ -131,8 +132,27 @@ const Product = () => {
         }
     }
 
-    const handleAdd  = ()=>{
-        dispatch(addProduct({...product,color,size,amount}))
+    const handleAdd = async () => {
+        dispatch(addProduct({ ...product, color, size, amount }))
+        if (user) { //if user exists, we ll set up the cart
+
+            try {
+
+                const res = (await userRequest.get(`/api/cart/find/${user._id}`)).data  //first , we ll find the user's cart
+                if (!res) { //if no cart is there, we ll set up a new one
+                    const response = (await userRequest.post(`/api/cart/`, { userId: user._id, products: [{ productId: product._id, quantity: amount, color, size }] })).data
+
+                }
+                else {   //if cart exists, we ll simply push the new choosen products into it i.e. update the cart
+                    const response = (await userRequest.put(`/api/cart/${res._id}`, { products: [...res.products, { productId: product._id, quantity: amount, color, size }] }))
+                }
+                
+            } catch (error) {
+
+            }
+
+        }
+
     }
 
     useEffect(() => {
@@ -176,7 +196,7 @@ const Product = () => {
                         }}>
                             Size:
                             <Select defaultValue="Select">
-                            <option disabled value="Select">Select</option>
+                                <option disabled value="Select">Select</option>
                                 {product.size.map((item) => <Option value={item} key={item} >{item}</Option>)}
                             </Select>
                         </Filter>

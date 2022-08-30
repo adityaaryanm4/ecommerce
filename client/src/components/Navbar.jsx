@@ -82,6 +82,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(logout())
+    window.location.href = "/login"
   }
 
   return (
@@ -103,10 +104,10 @@ const Navbar = () => {
 
           {user ?
             <MenuWrapper>
-              <MenuItem 
-              style={{ fontWeight: "bold", fontSize: "24px", display:"flex",alignItems:"center",justifyContent:"center" }}> 
-              <PersonIcon style={{marginRight:"5px"}}/> 
-              {user.username} 
+              <MenuItem
+                style={{ fontWeight: "bold", fontSize: "24px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <PersonIcon style={{ marginRight: "5px" }} />
+                {user.username}
               </MenuItem>
               <MenuItem onClick={handleLogout}>
                 Log Out

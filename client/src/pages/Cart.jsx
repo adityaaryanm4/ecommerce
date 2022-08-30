@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios';
+import React from 'react'
 import Announcement from '../components/Announcement'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
@@ -12,9 +11,8 @@ import { userRequest } from '../requestMethods';
 
 
 
-const Container = styled.div`
-    
-`
+const Container = styled.div` `
+
 const Wrapper = styled.div`
     padding: 20px;
 `
@@ -171,7 +169,7 @@ border-radius: 5px
 const Cart = () => {
     const dispatch = useDispatch()
     const cart = useSelector(state => state.cart)
-    const user = useSelector(state => state.user.currentUser) 
+    const user = useSelector(state => state.user.currentUser)
     const { products, cartQuantity, cartTotal } = cart
 
     const handleCheckout = () => {
@@ -179,7 +177,7 @@ const Cart = () => {
         if (cartTotal > 0 && user) {
             try {
                 const createSession = async () => {
-                    const response = (await userRequest.post("/api/checkout/create-checkout-session", { products})).data
+                    const response = (await userRequest.post("/api/checkout/create-checkout-session", { products })).data
                     localStorage.setItem("paymentIntent", JSON.stringify(response.pi))
                     window.location.href = response.url
                 }
@@ -187,6 +185,9 @@ const Cart = () => {
             } catch (error) {
                 console.log(error);
             }
+        }
+        else if (!user) {
+            window.location.href = "/login"
         }
     }
     const handleDelete = (product) => {
@@ -233,6 +234,7 @@ const Cart = () => {
                                     Delete
                                 </Delete>
                             </Price>
+                            <Hr/>
                         </Product>
 
                         )

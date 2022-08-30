@@ -1,14 +1,23 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { login } from "../../darkMode/apiCalls"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import "./login.scss"
+import { errorDefault } from "../../darkMode/userSlice"
 
 const Login = () => {
+
+    const { isFetching, error } = useSelector(state => state.user)
     const dispatch = useDispatch()
     const [user, setUser] = useState({
         email: "",
         password: ""
     })
+
+    //to set "error" to "false" on refresh/reload
+    useEffect(() => {
+        dispatch(errorDefault())
+    }, [dispatch])
+
     const handleChange = (event) => {
         const { name, value } = event.target
         setUser({ ...user, [name]: value })
@@ -22,7 +31,8 @@ const Login = () => {
             <form onSubmit={handleSubmit}>
                 <input name="email" type="email" placeholder="Email" value={user.email} onChange={handleChange} />
                 <input name="password" type="password" placeholder="Password" value={user.password} onChange={handleChange} />
-                <button type="submit">Login</button>
+                <button type="submit">{isFetching ? "Logging In..." : "Log In"}</button>
+                {error && <div style={{ color: "red" }}> Something went wrong...</div>}
             </form>
         </div>
     )

@@ -5,7 +5,6 @@ const login = async(dispatch,user) =>{
     dispatch(loginStart())
     try {
         const res = (await publicRequest.post("/api/auth/login",user)).data
-        console.log(res)
         if(res !== "Invalid ceredentials")
             dispatch(loginSuccess(res))
         else{
@@ -16,4 +15,8 @@ const login = async(dispatch,user) =>{
     }
 }
 
-export {login}
+const addToCartDB = async ()=>{
+
+}
+
+export {login,addToCartDB}

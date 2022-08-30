@@ -17,7 +17,7 @@ router.post("/",verifyToken, async (req, res) => {
 })
 
 // UPDATE
-router.put("/:_id",verifyTokenAndAuthorisation, async (req, res) => {             // this "_id" refers to cartId
+router.put("/:_id",verifyToken, async (req, res) => {             // this "_id" refers to cartId
     try {
         const updatedCart = await Cart.findByIdAndUpdate(req.params._id,
             { $set: req.body }, { new: true }
@@ -41,9 +41,9 @@ router.delete("/:_id",verifyTokenAndAuthorisation, async (req, res) => {
 })
 
 // GET USER CART
-router.get("/find/:userId",verifyTokenAndAuthorisation, async (req, res) => {
+router.get("/find/:_id",verifyTokenAndAuthorisation, async (req, res) => {
     try {
-        const cart = await Cart.findOne({userId:req.params.userId})
+        const cart = await Cart.findOne({userId:req.params._id})
         res.status(200).json(cart)
 
     } catch (error) {
