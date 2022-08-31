@@ -24,8 +24,8 @@ router.post('/create-checkout-session', verifyToken, async (req, res) => {
         }
       }),
       mode: 'payment',
-      success_url: `${process.env.DOMAIN}/success`,
-      cancel_url: `${process.env.DOMAIN}/cancel`,
+      success_url: `https://karashop.netlify.app/success`,
+      cancel_url: `https://karashop.netlify.app/cancel`,
     });
     res.json({ pi: session.payment_intent, url: session.url });
 

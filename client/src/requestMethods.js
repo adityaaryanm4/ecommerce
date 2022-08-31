@@ -11,6 +11,7 @@ if (localStorageObject) { //in very beginning, when the page has not loaded yet,
 
 const BASE_URL = "https://karashopserver.herokuapp.com/"
 
+
 const publicRequest = axios.create({
     baseURL: BASE_URL,
 })
