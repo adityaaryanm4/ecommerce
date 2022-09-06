@@ -33,7 +33,14 @@ The application is built on MERN(MongoDB, Express.js, React.js, Node.js) stack.
 
 
 #### Developed with
+* React, redux, data persistence, react-router-dom
 * SCSS
+* Firebase storage to store profile images.
+* Recharts to display data in charts. 
+* Material UI
+* Axios
+* dayjs
+
 kara admin dashboard: https://karaadmin-dashboard.netlify.app/
 
 ### Back-End
@@ -45,5 +52,7 @@ kara admin dashboard: https://karaadmin-dashboard.netlify.app/
 
 * Uses Bcrypt for hashing the password before sending the data to the cloud.
 
-This project also demonstrates:
+* Uses stripe for payments. 
+
+#### This project also demonstrates:
 * a typcial React project layout structure
