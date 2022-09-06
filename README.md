@@ -10,6 +10,7 @@ The application is built on MERN(MongoDB, Express.js, React.js, Node.js) stack.
 * Stripe payment method
  
 #### Developed with:
+* React
 * Material UI library
 * Redux toolkit
 * Redux persist
@@ -19,15 +20,19 @@ The application is built on MERN(MongoDB, Express.js, React.js, Node.js) stack.
 * React router dom
 * Styled components
 
-kara admin dashboard: https://karaadmin-dashboard.netlify.app/
-
 ### Front-End [ admin ]
-* Protected Routes
+* Homepage which displays the stats related to users, revenue and orders.
 
-#Admin area to manage users, products & orders
+* Has a profile page, which will display all information about the signed in user.
+
+* Has protected Routes.
+
+* Has product page where we can do all sorts of CRUD operations.
+
 
 #### Developed with
 * SCSS
+kara admin dashboard: https://karaadmin-dashboard.netlify.app/
 
 ### Back-End
 * Uses Express js based application for the backend process.
@@ -37,3 +42,6 @@ kara admin dashboard: https://karaadmin-dashboard.netlify.app/
 * Uses JWT for authenticating user and token based system.
 
 * Uses Bcrypt for hashing the password before sending the data to the cloud.
+
+This project also demonstrates:
+* a typcial React project layout structure
