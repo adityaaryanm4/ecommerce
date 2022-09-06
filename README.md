@@ -56,3 +56,21 @@ kara admin dashboard: https://karaadmin-dashboard.netlify.app/
 
 #### This project also demonstrates:
 * a typcial React project layout structure
+
+
+### Getting Started
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+#### Install
+Follow the following steps to get development environment running.
+* Clone 'ecommerce.git' repository from GitHub
+
+```bash
+  git clone https://github.com/adityaaryanm4/ecommerce.git
+  ```
+  OR USING SSH
+  
+  
+
+
+
