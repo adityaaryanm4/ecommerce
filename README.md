@@ -21,13 +21,15 @@ The application is built on MERN(MongoDB, Express.js, React.js, Node.js) stack.
 * Styled components
 
 ### Front-End [ admin ]
-* Homepage which displays the stats related to users, revenue and orders.
+* Has a homepage which displays the stats related to users, revenue and orders.
 
-* Has a profile page, which will display all information about the signed in user.
+* Has a profile page, which displays all information about the user/product.
 
 * Has protected Routes.
 
-* Has product page where we can do all sorts of CRUD operations.
+* Has products page where we can do all sorts of CRUD operations on the products.
+
+* Has users page which lists all the users and allows CRUD operations on them. 
 
 
 #### Developed with
