@@ -61,6 +61,12 @@ kara admin dashboard: https://karaadmin-dashboard.netlify.app/
 ### Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
+#### Prerequisites
+The following software is required to be installed on your system:
+
+* Node 14.x or higher
+* Npm 7.x
+
 #### Install
 Follow the following steps to get development environment running.
 * Clone 'ecommerce.git' repository from GitHub
