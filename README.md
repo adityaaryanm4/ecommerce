@@ -70,7 +70,35 @@ Follow the following steps to get development environment running.
   ```
   OR USING SSH
   
-  
+  ```bash
+  git clone git@github.com:adityaaryanm4/ecommerce.git
+  ```
+* Install node modules
 
+  ```bash
+   cd ecommerce
+   cd admin
+   npm install
+   cd..
+   cd client
+   npm install
+   cd..
+   cd server
+   npm install
+    ```
+#### Starting both front end and back end servers
+* Build application
 
+This command will start the mongodb and the front end part.
+
+```bash
+cd admin
+npm start
+cd..
+cd client
+npm start
+cd..
+cd server
+node index.js
+```
 
