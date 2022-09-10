@@ -1,5 +1,6 @@
 # MERN-eCommerce-Website
 The application is built on MERN(MongoDB, Express.js, React.js, Node.js) stack.
+Server is deployed on heroku & Front-end on netlify.
 
 ### Front-End [ client ]
 * Log-in and Register Pages
