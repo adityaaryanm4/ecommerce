@@ -98,7 +98,7 @@ const Navbar = () => {
 
         </Left>
 
-        <Center><Logo>KARA.</Logo></Center>
+        <Center><Logo><Link style={{ color: "#212529", textDecoration: "none" }} to="/">KARA.</Link></Logo></Center>
 
         <Right>
 

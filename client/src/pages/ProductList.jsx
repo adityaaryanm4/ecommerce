@@ -55,8 +55,8 @@ const ProductList = () => {
             <FilterContainer>
                 <Filter>
                     Filter Products
-                    <Select name="color" onChange={handleFiltersChange}>
-                        <Option defaultValue="disabled">Color</Option>
+                    <Select defaultValue="Color" name="color" onChange={handleFiltersChange}>
+                        <Option value="Color" disabled>Color</Option>
                         <Option>white</Option>
                         <Option>black</Option>
                         <Option>red</Option>
@@ -76,7 +76,7 @@ const ProductList = () => {
                 <Filter>
                     Sort Products
                     <Select onChange={handleSortChange}>
-                        <Option defaultValue="disabled">Newest</Option>
+                        <Option >Newest</Option>
                         <Option value="asc">Price(asc)</Option>
                         <Option value="desc">Price(desc)</Option>
                     </Select>

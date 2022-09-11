@@ -65,7 +65,7 @@ const Product = ({ product }) => {
             <Circle />
             <Image src={product.img} alt="popularProduct" />
             <Info>
-                <Link to={`/product/${product._id}`}>
+                <Link style={{color:"#212529"}} to={`/product/${product._id}`}>
                     <Icon>  <SearchOutlined style={{ fontSize: '22px' }}/>  </Icon>
                 </Link>
                 <Icon>  <ShoppingCartOutlined style={{ fontSize: '22px' }}/>  </Icon>

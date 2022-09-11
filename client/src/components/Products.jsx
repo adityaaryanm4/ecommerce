@@ -23,7 +23,7 @@ const Products = ({ category, filters, sort }) => {
             }
         }
         getProducts()
-
+ 
     }, [category])
 
     useEffect(() => {
@@ -51,7 +51,7 @@ const Products = ({ category, filters, sort }) => {
                     <Product key={filteredProduct._id} product={filteredProduct} />
 
                 )
-            }) : products.slice(0, 8).map(product => {
+            }) : products.slice(0, 8).map(product => {          //only taking 9 elements out of the total products
                 return (
                     <Product key={product._id} product={product} />
 
