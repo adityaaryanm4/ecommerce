@@ -42,8 +42,6 @@ Server is deployed on heroku & Front-end on netlify.
 * Axios
 * dayjs
 
-kara admin dashboard: https://karaadmin-dashboard.netlify.app/
-
 ### Back-End
 * Uses Express js based application for the backend process.
 
